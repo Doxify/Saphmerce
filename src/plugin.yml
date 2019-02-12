@@ -1,0 +1,19 @@
+name: Saphmerce
+main: org.saphron.saphmerce.Saphmerce
+version: 1.0.0
+author: Andrei Georgescu
+depend: [NSA, Vault]
+softdepends: [HolographicDisplays]
+description: >
+            Saphmerce - Mcmerce
+commands:
+  shop:
+      description: Open the virtual shop
+      usage: |
+             Usages:
+             /shop
+  shopAdmin:
+      description: Saphmerce admin commands
+      usage: |
+             Usages:
+             /shopAdmin

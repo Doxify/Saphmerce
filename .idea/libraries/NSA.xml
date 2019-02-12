@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="NSA">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../NSA/out/artifacts/NSA_jar/NSA.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
