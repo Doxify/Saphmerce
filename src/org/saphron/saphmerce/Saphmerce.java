@@ -29,6 +29,7 @@ public class Saphmerce extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ShopInterfaceEvents(this), this);
         this.getServer().getPluginManager().registerEvents(new ShopTransactionEvent(this), this);
         this.getServer().getPluginManager().registerEvents(new ShopAdminEvent(this), this);
+        this.getServer().getPluginManager().registerEvents(new SellAllStickEvent(this), this);
     }
 
     @Override

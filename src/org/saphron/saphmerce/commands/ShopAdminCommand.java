@@ -1,6 +1,7 @@
 package org.saphron.saphmerce.commands;
 
 import com.saphron.nsa.Utilities;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -26,8 +27,10 @@ public class ShopAdminCommand implements CommandExecutor {
             if(sender.hasPermission("saphmerce.admin")) {
                 Player p = (Player) sender;
 
+
                 // shopadmin createCategory "NAME"
                 // shopAdmin deleteCategory "NAME"
+                // shopadmin giveSellAllStick "player"
                 if(args.length == 2) {
                     String categoryName = args[1];
 
@@ -37,11 +40,8 @@ public class ShopAdminCommand implements CommandExecutor {
 
                             if(displayItem.getType() != Material.AIR) {
                                 Category category = new Category(categoryName, displayItem);
-                                if(plugin.getShop().addCategory(category)) {
-                                    p.sendMessage(ChatColor.GREEN + "Successfully created new shop category: " + category.getName());
-                                } else {
-                                    p.sendMessage(ChatColor.RED + "A category with that name already exists.");
-                                }
+                                plugin.getShop().addCategory(category);
+                                p.sendMessage(ChatColor.GREEN + "Successfully created new shop category: " + category.getName());
                             } else {
                                 p.sendMessage(ChatColor.RED + "You must be holding the item you want to represent the category in your hand.");
                             }
@@ -57,9 +57,26 @@ public class ShopAdminCommand implements CommandExecutor {
 
                             break;
                         }
+                        case "GIVESELLALLSTICK": {
+                            Player target = Bukkit.getPlayer(args[1]);
+                            if(target != null) {
+                                if(target.getInventory().firstEmpty() != -1) {
+                                    target.getInventory().addItem(plugin.getShop().getSellAllStick());
+                                    target.sendMessage(ChatColor.GREEN + "You've been given a sell all stick, keep it safe!");
+                                } else {
+                                    target.getWorld().dropItem(target.getLocation(), plugin.getShop().getSellAllStick());
+                                    target.sendMessage(ChatColor.GREEN + "You've been given a sell all stick, keep it safe!");
+                                    target.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "There was no room in your inventory so your sell all stick has been dropped on the ground!");
+                                }
+                                p.sendMessage(ChatColor.GREEN + "Successfully gave " + target.getName() + " a sell all stick.");
+                                break;
+                            } else {
+                                p.sendMessage(ChatColor.RED + args[1] + " is not online.");
+                                break;
+                            }
+                        }
                         default: {
-                            p.sendMessage(ChatColor.RED + "Usage: /shopAdmin createCategory 'categoryName'");
-                            p.sendMessage(ChatColor.RED + "Usage: /shopAdmin deleteCategory 'categoryName'");
+                            displayShopAdminCommands(p);
                             break;
                         }
                     }
@@ -109,10 +126,11 @@ public class ShopAdminCommand implements CommandExecutor {
                         }
                     } else {
                         p.sendMessage(ChatColor.RED + "Invalid syntax.");
+                        displayShopAdminCommands(p);
                         return true;
                     }
                 } else {
-                    p.sendMessage(ChatColor.RED + "/shopAdmin");
+                    displayShopAdminCommands(p);
                 }
 
             } else {
@@ -120,6 +138,14 @@ public class ShopAdminCommand implements CommandExecutor {
             }
         }
         return true;
+    }
+
+    public void displayShopAdminCommands(Player p) {
+        p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Usage:");
+        p.sendMessage(ChatColor.RED + "/shopAdmin createCategory 'categoryName'");
+        p.sendMessage(ChatColor.RED + "/shopAdmin deleteCategory 'categoryName'");
+        p.sendMessage(ChatColor.RED + "/shopAdmin addItem 'categoryName' 'buy price' 'sell price' 'item name'");
+        p.sendMessage(ChatColor.RED + "/shopAdmin giveSellAllStick 'player name'");
     }
 
 }

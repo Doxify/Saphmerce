@@ -3,6 +3,8 @@ package org.saphron.saphmerce;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,6 +16,7 @@ import org.saphron.saphmerce.utilities.ItemStackCreator;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,6 +40,7 @@ public class Shop {
             setShopCategories(shopCategories);
             setEnabled(true);
         } else {
+            setShopCategories(shopCategories);
             setEnabled(false);
         }
     }
@@ -98,9 +102,11 @@ public class Shop {
     }
 
     public boolean categoryExists(String name) {
-        for(Category category : shopCategories) {
-            if(category.getName().equalsIgnoreCase(name)) {
-                return true;
+        if(isEnabled()) {
+            for(Category category : shopCategories) {
+                if(category.getName().equalsIgnoreCase(name)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -233,7 +239,6 @@ public class Shop {
 
     }
 
-
     public int getItemCountFromInventory(Player p, ItemStack itemStack) {
         int count = 0;
 
@@ -246,5 +251,43 @@ public class Shop {
         }
 
         return count;
+    }
+
+    public ItemStack getSellAllStick() {
+        // DO NOT CHANGE NAME OR LORE, IT WILL BREAK ALL PREVIOUS SELL ALL STICKS SPAWNED.
+        ItemStack sellAllStick = itemStackCreator.createItemStack(
+                Material.STICK,
+                ChatColor.LIGHT_PURPLE + "Sell All Stick",
+                Arrays.asList(ChatColor.YELLOW + "Right click a chest to use.")
+        );
+
+        return sellAllStick;
+    }
+
+    public boolean handleSellAllStick(Player p, Chest clickedChest) {
+        boolean soldItems = false;
+
+        for (ItemStack chestItem : clickedChest.getInventory().getContents()) {
+            if(chestItem != null) {
+                for(Category category : shopCategories) {
+                    ShopItem shopItem = category.getShopItemByItemStack(chestItem);
+                    if(shopItem != null) {
+                        if(shopItem.isSellable()) {
+
+                            EconomyResponse econres = plugin.getNsa().getEcon().depositPlayer(p, (shopItem.getSellPrice() * chestItem.getAmount()));
+
+                            if(econres.transactionSuccess()) {
+                                p.sendMessage(ChatColor.GREEN + "Successful sale: " + chestItem.getAmount() + " x " + shopItem.getName() + " for $" + df.format(econres.amount));
+                                clickedChest.getInventory().removeItem(chestItem);
+                                soldItems = true;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        return soldItems;
     }
 }
