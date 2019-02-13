@@ -7,17 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51c4fa31-d6c2-44a3-a22a-7b1e2d3172b4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/events/SellAllStickEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Saphmerce_jar/Saphmerce.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Saphmerce_jar/Saphmerce.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/Category.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/Saphmerce.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/Saphmerce.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/Shop.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/Shop.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/commands/ShopAdminCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/commands/ShopAdminCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/Saphmerce.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/Saphmerce.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopAdminCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopAdminCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,11 +28,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Shop.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Shop.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="556">
-              <caret line="267" column="34" lean-forward="true" selection-start-line="267" selection-start-column="34" selection-end-line="267" selection-end-column="34" />
+              <caret line="267" column="34" selection-start-line="267" selection-start-column="34" selection-end-line="267" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plugin.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/plugin.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="27" column="77" selection-start-line="27" selection-start-column="77" selection-end-line="27" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -60,7 +68,7 @@
         <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/events/SellAllStickEvent.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="576">
-              <caret line="45" column="21" lean-forward="true" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+              <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -101,6 +109,7 @@
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/Saphmerce.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/events/SellAllStickEvent.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -162,15 +171,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="saphmerce" type="462c0819:PsiDirectoryNode" />
               <item name="serialization" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Saphmerce" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="Saphmerce" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="anvilgui-1.2.1-SNAPSHOT" type="70bed36:NamedLibraryElementNode" />
             </path>
           </expand>
           <select />
@@ -274,7 +274,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.27047333" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.27014652" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18956336" />
@@ -314,14 +314,28 @@
     <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/events/SellAllStickEvent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="576">
-          <caret line="45" column="21" lean-forward="true" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+          <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="556">
-          <caret line="267" column="34" lean-forward="true" selection-start-line="267" selection-start-column="34" selection-end-line="267" selection-end-column="34" />
+          <caret line="267" column="34" selection-start-line="267" selection-start-column="34" selection-end-line="267" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="27" column="77" selection-start-line="27" selection-start-column="77" selection-end-line="27" selection-end-column="77" />
         </state>
       </provider>
     </entry>
