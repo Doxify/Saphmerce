@@ -9,12 +9,14 @@ import org.bukkit.inventory.ItemStack;
 import org.saphron.saphmerce.Category;
 import org.saphron.saphmerce.Shop;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CategoryGUI {
 
     Shop shop;
+    private List<Integer> blackListSlots = new ArrayList<>(Arrays.asList(9, 17, 18, 26, 27, 35, 36, 44));
 
     public CategoryGUI(Shop s) {
         shop = s;
@@ -26,15 +28,21 @@ public class CategoryGUI {
         int categoryCounter = 0;
 
         // Category items code
-        for(int i = 10; i < (shopCategories.size() + 10); i++) {
-            Category category = shopCategories.get(categoryCounter);
-            ItemStack categoryItem = shop.itemStackCreator.createItemStack(
-                category.getDisplayItem().getType(),
-                ChatColor.LIGHT_PURPLE + category.getName(),
-                Arrays.asList(ChatColor.GRAY + "Items: " + ChatColor.YELLOW + category.getCategoryItems().size())
-            );
-            categoryInventory.setItem(i, categoryItem);
-            categoryCounter++;
+        for(int i = 10; i < (categoryInventory.getSize() - 10); i++) {
+            if(!blackListSlots.contains(i)) {
+                Category category = shopCategories.get(categoryCounter);
+                ItemStack categoryItem = shop.itemStackCreator.createItemStack(
+                        category.getDisplayItem().getType(),
+                        ChatColor.LIGHT_PURPLE + category.getName(),
+                        Arrays.asList(ChatColor.GRAY + "Items: " + ChatColor.YELLOW + category.getCategoryItems().size())
+                );
+                categoryInventory.setItem(i, categoryItem);
+                categoryCounter++;
+
+                if(categoryCounter == shopCategories.size()) {
+                    break;
+                }
+            }
         }
 
         // Bottom bar code

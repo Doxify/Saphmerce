@@ -12,6 +12,12 @@ commands:
       usage: |
              Usages:
              /shop
+  sell:
+      description: Sell items without opening the shop
+      usage: |
+             Usages:
+             /sell
+             /sell all
   shopAdmin:
       description: Saphmerce admin commands
       usage: |

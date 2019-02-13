@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -22,7 +23,8 @@ public class SellAllStickEvent implements Listener {
 
     public SellAllStickEvent(Saphmerce p) { plugin = p; shop = plugin.getShop(); }
 
-    @EventHandler
+
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onSellAllStickUse(PlayerInteractEvent e) {
         if(!e.isCancelled()) {
             if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -36,7 +38,7 @@ public class SellAllStickEvent implements Listener {
                             Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    if(!shop.handleSellAllStick(p, clickedChest)) {
+                                    if(!shop.handleSellAllInventory(p, clickedChest.getInventory())) {
                                         p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in this chest.");
                                     }
                                 }

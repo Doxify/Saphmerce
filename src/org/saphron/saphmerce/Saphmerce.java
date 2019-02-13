@@ -2,6 +2,7 @@ package org.saphron.saphmerce;
 
 import com.saphron.nsa.NSA;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.saphron.saphmerce.commands.SellCommand;
 import org.saphron.saphmerce.commands.ShopAdminCommand;
 import org.saphron.saphmerce.commands.ShopCommand;
 import org.saphron.saphmerce.events.*;
@@ -22,6 +23,7 @@ public class Saphmerce extends JavaPlugin {
 
         // Commands
         getCommand("shop").setExecutor(new ShopCommand(this));
+        getCommand("sell").setExecutor(new SellCommand(this));
         getCommand("shopAdmin").setExecutor(new ShopAdminCommand(this));
 
         // Events

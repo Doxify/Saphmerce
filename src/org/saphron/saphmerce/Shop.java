@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.saphron.saphmerce.guis.AdminGUI;
 import org.saphron.saphmerce.guis.CategoryGUI;
@@ -264,27 +265,32 @@ public class Shop {
         return sellAllStick;
     }
 
-    public boolean handleSellAllStick(Player p, Chest clickedChest) {
+    public boolean handleSellAllInventory(Player p, Inventory inventory) {
         boolean soldItems = false;
+        int soldItemsAmount = 0;
+        double soldItemsPrice = 0;
 
-        for (ItemStack chestItem : clickedChest.getInventory().getContents()) {
-            if(chestItem != null) {
+        for (ItemStack invItem : inventory.getContents()) {
+            if(invItem != null) {
                 for(Category category : shopCategories) {
-                    ShopItem shopItem = category.getShopItemByItemStack(chestItem);
+                    ShopItem shopItem = category.getShopItemByItemStack(invItem);
                     if(shopItem != null) {
                         if(shopItem.isSellable()) {
-
-                            EconomyResponse econres = plugin.getNsa().getEcon().depositPlayer(p, (shopItem.getSellPrice() * chestItem.getAmount()));
-
-                            if(econres.transactionSuccess()) {
-                                p.sendMessage(ChatColor.GREEN + "Successful sale: " + chestItem.getAmount() + " x " + shopItem.getName() + " for $" + df.format(econres.amount));
-                                clickedChest.getInventory().removeItem(chestItem);
-                                soldItems = true;
-                            }
-
+                            soldItemsPrice += (shopItem.getSellPrice() * invItem.getAmount());
+                            soldItemsAmount += invItem.getAmount();
+                            inventory.removeItem(invItem);
+                            soldItems = true;
                         }
                     }
                 }
+            }
+        }
+
+        if(soldItems) {
+            EconomyResponse econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice);
+            if(econres.transactionSuccess()) {
+                p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for $" + df.format(econres.amount));
+
             }
         }
 
