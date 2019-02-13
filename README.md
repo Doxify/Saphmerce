@@ -17,6 +17,11 @@ Saphron's virtual shop plugin
 
 `"name" can be as long or as short as you want, no limitations.`
 
+### Sell All Stick
+Sell all sticks allow players to right click a chest and sell all the items that are for sale in that chest.
+
+`/shopAdmin givesellallstick "player"`
+
 ### Admin GUI
 The admin gui can be enabled by SHIFT clicking any item. All ops and players who have "saphmerce.admin" will be able to use this feature.
 
