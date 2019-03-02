@@ -11,5 +11,6 @@
     <orderEntry type="library" name="Vault" level="project" />
     <orderEntry type="library" name="NSA" level="project" />
     <orderEntry type="library" name="anvilgui-1.2.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Saphblock" level="project" />
   </component>
 </module>

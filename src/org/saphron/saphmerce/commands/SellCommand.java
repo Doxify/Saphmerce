@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.saphron.saphblock.mine.MineModeManager;
 import org.saphron.saphmerce.Category;
 import org.saphron.saphmerce.Saphmerce;
 import org.saphron.saphmerce.ShopItem;
@@ -70,7 +71,7 @@ public class SellCommand implements CommandExecutor {
                                     Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
                                         @Override
                                         public void run() {
-                                            if(!plugin.getShop().handleSellAllInventory(p, p.getInventory())) {
+                                            if(!plugin.getShop().handleSellAllInventory(p, p.getInventory(), false)) {
                                                 p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in your inventory!");
                                             }
                                         }
@@ -81,6 +82,20 @@ public class SellCommand implements CommandExecutor {
                                     break;
                                 }
 
+                            } else if(args[0].equalsIgnoreCase("MINE")) {
+                                MineModeManager mineModeManager = plugin.getSaphblock().mineModeManager;
+                                if(mineModeManager.isInMineMode(p.getUniqueId().toString())) {
+                                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if(!plugin.getShop().handleSellAllInventory(p, p.getInventory(), true)) {
+                                                p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in your inventory!");
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    p.sendMessage(ChatColor.RED + "You must be in mine mode to use this command.");
+                                }
                             } else {
                                 p.sendMessage(ChatColor.RED + "Usage: /sell all");
                             }

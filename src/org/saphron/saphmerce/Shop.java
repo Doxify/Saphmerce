@@ -4,8 +4,6 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Chest;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -25,6 +23,7 @@ public class Shop {
 
     Saphmerce plugin;
     private boolean enabled;
+    private double mineModeMultiplier;
     private static DecimalFormat df = new DecimalFormat(".##");;
     private List<Category> shopCategories;
     public ItemStackCreator itemStackCreator = new ItemStackCreator();
@@ -37,6 +36,7 @@ public class Shop {
 
     public Shop(Saphmerce p, List<Category> shopCategories) {
         plugin = p;
+        mineModeMultiplier = plugin.getMineModeMultiplier();
         if(shopCategories.size() > 0) {
             setShopCategories(shopCategories);
             setEnabled(true);
@@ -265,7 +265,7 @@ public class Shop {
         return sellAllStick;
     }
 
-    public boolean handleSellAllInventory(Player p, Inventory inventory) {
+    public boolean handleSellAllInventory(Player p, Inventory inventory, boolean isInMindMode) {
         boolean soldItems = false;
         int soldItemsAmount = 0;
         double soldItemsPrice = 0;
@@ -287,8 +287,13 @@ public class Shop {
         }
 
         if(soldItems) {
-            EconomyResponse econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice);
-            if(econres.transactionSuccess()) {
+            EconomyResponse econres;
+            if(isInMindMode && mineModeMultiplier != 0) {
+                econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice * mineModeMultiplier);
+                p.sendMessage(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "MINE " + ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for $" + df.format(econres.amount));
+
+            } else {
+                econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice);
                 p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for $" + df.format(econres.amount));
 
             }
