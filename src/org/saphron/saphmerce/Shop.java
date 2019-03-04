@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.saphron.saphblock.mine.MineMode;
 import org.saphron.saphmerce.guis.AdminGUI;
 import org.saphron.saphmerce.guis.CategoryGUI;
 import org.saphron.saphmerce.guis.ShopItemGUI;
@@ -289,9 +290,10 @@ public class Shop {
         if(soldItems) {
             EconomyResponse econres;
             if(isInMindMode && mineModeMultiplier != 0) {
+                MineMode mm = plugin.getSaphblock().mineModeManager.getMineMode(p.getUniqueId().toString());
                 econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice * mineModeMultiplier);
                 p.sendMessage(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "MINE " + ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for $" + df.format(econres.amount));
-
+                mm.handleSold(econres.amount);
             } else {
                 econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice);
                 p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for $" + df.format(econres.amount));

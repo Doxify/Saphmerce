@@ -24,92 +24,79 @@ public class SellCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(sender instanceof Player) {
             Player p = (Player) sender;
+            if(plugin.getShop().isEnabled()) {
+                switch (args.length) {
+                    case 0: {
+                        if(p.getItemInHand().getType() != Material.AIR) {
 
-            if(p.hasPermission("saphmerce.sell") || p.hasPermission("saphmerce.sellall")) {
-                if(plugin.getShop().isEnabled()) {
-                    switch (args.length) {
-                        case 0: {
-                            if (p.hasPermission("saphmerce.sell")) {
-                                if(p.getItemInHand().getType() != Material.AIR) {
+                            Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    ItemStack sellItem = new ItemStack(p.getItemInHand());
 
-                                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ItemStack sellItem = new ItemStack(p.getItemInHand());
+                                    for (Category category : plugin.getShop().getShopCategories()) {
+                                        ShopItem shopItem = category.getShopItemByItemStack(sellItem);
 
-                                            for (Category category : plugin.getShop().getShopCategories()) {
-                                                ShopItem shopItem = category.getShopItemByItemStack(sellItem);
-
-                                                if (shopItem != null) {
-                                                    if (shopItem.isSellable()) {
-                                                        plugin.getShop().handleSell(p, shopItem, p.getItemInHand().getAmount());
-                                                        break;
-                                                    } else {
-                                                        p.sendMessage(ChatColor.RED + "This item cannot be sold.");
-                                                        break;
-                                                    }
-                                                } else {
-                                                    p.sendMessage(ChatColor.RED + "This item cannot be sold.");
-                                                    break;
-                                                }
+                                        if (shopItem != null) {
+                                            if (shopItem.isSellable()) {
+                                                plugin.getShop().handleSell(p, shopItem, p.getItemInHand().getAmount());
+                                                break;
+                                            } else {
+                                                p.sendMessage(ChatColor.RED + "This item cannot be sold.");
+                                                break;
                                             }
+                                        } else {
+                                            p.sendMessage(ChatColor.RED + "This item cannot be sold.");
+                                            break;
                                         }
-                                    });
-
-                                } else {
-                                    p.sendMessage(ChatColor.RED + "You must be holding the item you want to sell.");
+                                    }
                                 }
-                            } else {
-                                p.sendMessage(Utilities.NO_PERMISSION);
-                            }
-                            break;
-                        }
-                        case 1: {
-                            if (args[0].equalsIgnoreCase("ALL")) {
-                                if (p.hasPermission("saphmerce.sellall")) {
+                            });
 
-                                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if(!plugin.getShop().handleSellAllInventory(p, p.getInventory(), false)) {
-                                                p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in your inventory!");
-                                            }
-                                        }
-                                    });
-
-                                } else {
-                                    p.sendMessage(Utilities.NO_PERMISSION);
-                                    break;
-                                }
-
-                            } else if(args[0].equalsIgnoreCase("MINE")) {
-                                MineModeManager mineModeManager = plugin.getSaphblock().mineModeManager;
-                                if(mineModeManager.isInMineMode(p.getUniqueId().toString())) {
-                                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if(!plugin.getShop().handleSellAllInventory(p, p.getInventory(), true)) {
-                                                p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in your inventory!");
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    p.sendMessage(ChatColor.RED + "You must be in mine mode to use this command.");
-                                }
-                            } else {
-                                p.sendMessage(ChatColor.RED + "Usage: /sell all");
-                            }
-                            break;
+                        } else {
+                            p.sendMessage(ChatColor.RED + "You must be holding the item you want to sell.");
                         }
-                        default: {
-                            break;
-                        }
+                        break;
                     }
-                } else {
-                    p.sendMessage(ChatColor.RED + "Shop is currently disabled.");
+                    case 1: {
+                        if (args[0].equalsIgnoreCase("ALL")) {
+
+                            Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(!plugin.getShop().handleSellAllInventory(p, p.getInventory(), false)) {
+                                        p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in your inventory!");
+                                    }
+                                }
+                            });
+
+                        } else if(args[0].equalsIgnoreCase("MINE")) {
+                            MineModeManager mineModeManager = plugin.getSaphblock().mineModeManager;
+                            if(mineModeManager.isInMineMode(p.getUniqueId().toString())) {
+
+                                Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(!plugin.getShop().handleSellAllInventory(p, p.getInventory(), true)) {
+                                            p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in your inventory!");
+                                        }
+                                    }
+                                });
+
+                            } else {
+                                p.sendMessage(ChatColor.RED + "You must be in mine mode to use this command.");
+                            }
+                        } else {
+                            p.sendMessage(ChatColor.RED + "Usage: /sell all");
+                        }
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
                 }
             } else {
-                p.sendMessage(Utilities.NO_PERMISSION);
+                p.sendMessage(ChatColor.RED + "Shop is currently disabled.");
             }
         } else {
             sender.sendMessage(Utilities.NON_PLAYER_SENDER);
