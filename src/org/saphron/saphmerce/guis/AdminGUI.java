@@ -29,8 +29,8 @@ public class AdminGUI {
         shopItemStackMeta.setLore(
             Arrays.asList(
                     ChatColor.GRAY + "Name: " + ChatColor.LIGHT_PURPLE + shopItem.getName(),
-                    ChatColor.GRAY + "Buy Price: " + ChatColor.GREEN + shopItem.getBuyPrice(),
-                    ChatColor.GRAY + "Sell Price: " + ChatColor.RED + shopItem.getSellPrice(),
+                    ChatColor.GRAY + "Buy Price: " + ChatColor.GREEN + shop.df.format(shopItem.getBuyPrice()),
+                    ChatColor.GRAY + "Sell Price: " + ChatColor.RED + shop.df.format(shopItem.getSellPrice()),
                     "",
                     ChatColor.GRAY + "Command Item: " + ChatColor.YELLOW + shopItem.isCommandItem(),
                     (shopItem.isCommandItem() ? ChatColor.YELLOW + "/" + shopItem.getCommandString() : "")

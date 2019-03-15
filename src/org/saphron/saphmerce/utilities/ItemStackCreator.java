@@ -6,10 +6,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.saphron.saphmerce.ShopItem;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemStackCreator {
+
+    private static NumberFormat df = NumberFormat.getCurrencyInstance();
+
 
     public ItemStack createItemStack(Material guiMaterial, String name, List<String> lore) {
         ItemStack item = new ItemStack(guiMaterial, 1);
@@ -29,13 +33,13 @@ public class ItemStackCreator {
         itemMeta.setDisplayName(ChatColor.LIGHT_PURPLE + shopItem.getName());
 
         if(shopItem.isBuyable()) {
-            itemLore.add(ChatColor.GRAY + "Buy: " + ChatColor.GREEN + "$" + shopItem.getBuyPrice());
+            itemLore.add(ChatColor.GRAY + "Buy: " + ChatColor.GREEN + df.format(shopItem.getBuyPrice()));
         } else {
             itemLore.add(ChatColor.GRAY + "Buy: " + ChatColor.DARK_RED + "Unavailable");
         }
 
         if(shopItem.isSellable()) {
-            itemLore.add(ChatColor.GRAY + "Sell: " + ChatColor.GREEN + "$" + shopItem.getSellPrice());
+            itemLore.add(ChatColor.GRAY + "Sell: " + ChatColor.GREEN + df.format(shopItem.getSellPrice()));
         } else {
             itemLore.add(ChatColor.GRAY + "Sell: " + ChatColor.DARK_RED + "Unavailable");
         }
