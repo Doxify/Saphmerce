@@ -1,5 +1,6 @@
 package org.saphron.saphmerce.guis;
 
+import com.saphron.nsa.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -31,7 +32,7 @@ public class TransactionGUI {
             ChatColor.RED + ChatColor.BOLD.toString() +  "Sell",
             Arrays.asList(
                 ChatColor.GRAY + "Amount: " + ChatColor.YELLOW + amount,
-                ChatColor.GRAY + "Price: " + ChatColor.GREEN + shop.df.format(shopItem.getSellPrice() * amount),
+                ChatColor.GRAY + "Price: " + ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getSellPrice() * amount),
                 "",
                 ChatColor.GRAY + "Click to confirm sale."
             )
@@ -41,7 +42,7 @@ public class TransactionGUI {
         List<String> sellAllItemLore = new ArrayList<>();
         if(transactionItemsInInventoryCount > 0) {
             sellAllItemLore.add(ChatColor.GRAY + "Amount: " + ChatColor.YELLOW + transactionItemsInInventoryCount);
-            sellAllItemLore.add(ChatColor.GRAY + "Price: " + ChatColor.GREEN + shop.df.format(shopItem.getSellPrice() * transactionItemsInInventoryCount));
+            sellAllItemLore.add(ChatColor.GRAY + "Price: " + ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getSellPrice() * transactionItemsInInventoryCount));
             sellAllItemLore.add("");
             sellAllItemLore.add(ChatColor.GRAY + "Click to confirm sale.");
         } else {
@@ -59,7 +60,7 @@ public class TransactionGUI {
             ChatColor.GREEN + ChatColor.BOLD.toString() +  "Buy",
             Arrays.asList(
                 ChatColor.GRAY + "Amount: " + ChatColor.YELLOW + amount,
-                ChatColor.GRAY + "Price: " + ChatColor.GREEN + shop.df.format(shopItem.getBuyPrice() * amount),
+                ChatColor.GRAY + "Price: " + ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getBuyPrice() * amount),
                 "",
                 ChatColor.GRAY + "Click to confirm purchase."
             )

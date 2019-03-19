@@ -1,5 +1,6 @@
 package org.saphron.saphmerce.guis;
 
+import com.saphron.nsa.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -29,8 +30,8 @@ public class AdminGUI {
         shopItemStackMeta.setLore(
             Arrays.asList(
                     ChatColor.GRAY + "Name: " + ChatColor.LIGHT_PURPLE + shopItem.getName(),
-                    ChatColor.GRAY + "Buy Price: " + ChatColor.GREEN + shop.df.format(shopItem.getBuyPrice()),
-                    ChatColor.GRAY + "Sell Price: " + ChatColor.RED + shop.df.format(shopItem.getSellPrice()),
+                    ChatColor.GRAY + "Buy Price: " + ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getBuyPrice()),
+                    ChatColor.GRAY + "Sell Price: " + ChatColor.RED + Utilities.moneyFormat.format(shopItem.getSellPrice()),
                     "",
                     ChatColor.GRAY + "Command Item: " + ChatColor.YELLOW + shopItem.isCommandItem(),
                     (shopItem.isCommandItem() ? ChatColor.YELLOW + "/" + shopItem.getCommandString() : "")

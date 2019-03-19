@@ -1,5 +1,6 @@
 package org.saphron.saphmerce;
 
+import com.saphron.nsa.Utilities;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,8 +15,6 @@ import org.saphron.saphmerce.guis.ShopItemGUI;
 import org.saphron.saphmerce.guis.TransactionGUI;
 import org.saphron.saphmerce.utilities.ItemStackCreator;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,8 +25,6 @@ public class Shop {
     Saphmerce plugin;
     private boolean enabled;
     private double mineModeMultiplier;
-//    private static DecimalFormat df = new DecimalFormat(".##");;
-    public static NumberFormat df = NumberFormat.getCurrencyInstance();
     private List<Category> shopCategories;
     public ItemStackCreator itemStackCreator = new ItemStackCreator();
     public CategoryGUI categoryGUI = new CategoryGUI(this);
@@ -127,7 +124,7 @@ public class Shop {
                     plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
                 }
 
-                p.sendMessage(ChatColor.GREEN + "Successful purchase: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + df.format(econres.amount));
+                p.sendMessage(ChatColor.GREEN + "Successful purchase: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
                 p.updateInventory();
 
             } else {
@@ -135,7 +132,7 @@ public class Shop {
                 buyItem.setAmount(transactionItemAmount);
                 HashMap<Integer, ItemStack> leftOverItems = p.getInventory().addItem(buyItem);
 
-                p.sendMessage(ChatColor.GREEN + "Successful purchase: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + df.format(econres.amount));
+                p.sendMessage(ChatColor.GREEN + "Successful purchase: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
                 p.updateInventory();
 
                 if(leftOverItems.size() > 0) {
@@ -147,7 +144,7 @@ public class Shop {
             }
 
         } else {
-            p.sendMessage(ChatColor.RED + "Insufficient funds! You need at least " + df.format(econres.amount));
+            p.sendMessage(ChatColor.RED + "Insufficient funds! You need at least " + Utilities.moneyFormat.format(econres.amount));
         }
     }
 
@@ -160,7 +157,7 @@ public class Shop {
             EconomyResponse econres = plugin.getNsa().getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * transactionItemAmount));
 
             if(econres.transactionSuccess()) {
-                p.sendMessage(ChatColor.GREEN + "Successful sale: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + df.format(econres.amount));
+                p.sendMessage(ChatColor.GREEN + "Successful sale: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
             } else {
                 p.sendMessage(ChatColor.GREEN + "Transaction failed, contact an administrator.");
             }
@@ -233,7 +230,7 @@ public class Shop {
             EconomyResponse econres = plugin.getNsa().getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * itemsInInventory));
 
             if(econres.transactionSuccess()) {
-                p.sendMessage(ChatColor.GREEN + "Successful sale: " + itemsInInventory + " x " + transactionShopItem.getName() + " for " + df.format(econres.amount));
+                p.sendMessage(ChatColor.GREEN + "Successful sale: " + itemsInInventory + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
             } else {
                 p.sendMessage(ChatColor.GREEN + "Transaction failed, contact an administrator.");
             }
@@ -294,11 +291,11 @@ public class Shop {
             if(isInMindMode && mineModeMultiplier != 0) {
                 MineMode mm = plugin.getSaphblock().mineModeManager.getMineMode(p.getUniqueId().toString());
                 econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice * mineModeMultiplier);
-                p.sendMessage(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "MINE " + ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + df.format(econres.amount));
+                p.sendMessage(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "MINE " + ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount));
                 mm.handleSold(econres.amount);
             } else {
                 econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice);
-                p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + df.format(econres.amount));
+                p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount));
 
             }
         }
