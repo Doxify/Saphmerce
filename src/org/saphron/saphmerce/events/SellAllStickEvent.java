@@ -21,7 +21,10 @@ public class SellAllStickEvent implements Listener {
     Saphmerce plugin;
     Shop shop;
 
-    public SellAllStickEvent(Saphmerce p) { plugin = p; shop = plugin.getShop(); }
+    public SellAllStickEvent(Saphmerce p) {
+        plugin = p;
+        shop = plugin.getShop();
+    }
 
 
     @EventHandler(priority = EventPriority.HIGHEST)

@@ -87,7 +87,7 @@ public class TransactionGUI {
         ItemStack add10Item = shop.itemStackCreator.createItemStack(
                 Material.INK_SACK,
                 ChatColor.GREEN + "+ 10",
-                Arrays.asList(ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "SHIFT+CLICK = 64")
+                null
         );
         add10Item.setDurability((byte) 10);
         add10Item.setAmount(10);
@@ -113,7 +113,7 @@ public class TransactionGUI {
         ItemStack subtract10Item = shop.itemStackCreator.createItemStack(
                 Material.INK_SACK,
                 ChatColor.RED + "- 10",
-                Arrays.asList(ChatColor.DARK_RED + ChatColor.BOLD.toString() + "SHIFT+CLICK = 1")
+                null
         );
         subtract10Item.setDurability((byte) 8);
         subtract10Item.setAmount(10);

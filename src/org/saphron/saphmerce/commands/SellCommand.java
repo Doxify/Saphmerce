@@ -78,7 +78,7 @@ public class SellCommand implements CommandExecutor {
                                     @Override
                                     public void run() {
                                         if(!plugin.getShop().handleSellAllInventory(p, p.getInventory(), true)) {
-                                            p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in your inventory!");
+                                            p.sendMessage(ChatColor.RED + "Couldn't find any mine drops in your inventory to sell!");
                                         }
                                     }
                                 });

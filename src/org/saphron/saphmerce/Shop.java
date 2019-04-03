@@ -115,7 +115,7 @@ public class Shop {
 
     // BUY
     public void handleBuy(Player p, ShopItem transactionShopItem, int transactionItemAmount) {
-        EconomyResponse econres = plugin.getNsa().getEcon().withdrawPlayer(p, (transactionItemAmount * transactionShopItem.getBuyPrice()));
+        EconomyResponse econres = plugin.getEcon().withdrawPlayer(p, (transactionItemAmount * transactionShopItem.getBuyPrice()));
         if(econres.transactionSuccess()) {
             if(transactionShopItem.isCommandItem()) {
                 String command = transactionShopItem.getCommandString().replace("<p>", p.getDisplayName());
@@ -154,7 +154,7 @@ public class Shop {
         if(hasEnoughItemsInInventory(p, sellItem, transactionItemAmount)) {
             removeItemFromInventory(p, sellItem, transactionItemAmount);
 
-            EconomyResponse econres = plugin.getNsa().getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * transactionItemAmount));
+            EconomyResponse econres = plugin.getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * transactionItemAmount));
 
             if(econres.transactionSuccess()) {
                 p.sendMessage(ChatColor.GREEN + "Successful sale: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
@@ -227,7 +227,7 @@ public class Shop {
 
         if(itemsInInventory != 0) {
             removeItemFromInventory(p, sellAllItem, itemsInInventory);
-            EconomyResponse econres = plugin.getNsa().getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * itemsInInventory));
+            EconomyResponse econres = plugin.getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * itemsInInventory));
 
             if(econres.transactionSuccess()) {
                 p.sendMessage(ChatColor.GREEN + "Successful sale: " + itemsInInventory + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
@@ -272,6 +272,12 @@ public class Shop {
 
         for (ItemStack invItem : inventory.getContents()) {
             if(invItem != null) {
+                // Making sure that the item being sold is in fact a mine drop
+                // TODO: Fix this, it doesn't work currently
+                if(isInMindMode && !invItem.getItemMeta().hasLore() || !invItem.getItemMeta().getLore().contains("Mine Drop")) {
+                    continue;
+                }
+
                 for(Category category : shopCategories) {
                     ShopItem shopItem = category.getShopItemByItemStack(invItem);
                     if(shopItem != null) {
@@ -290,11 +296,11 @@ public class Shop {
             EconomyResponse econres;
             if(isInMindMode && mineModeMultiplier != 0) {
                 MineMode mm = plugin.getSaphblock().mineModeManager.getMineMode(p.getUniqueId().toString());
-                econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice * mineModeMultiplier);
+                econres = plugin.getEcon().depositPlayer(p, soldItemsPrice * mineModeMultiplier);
                 p.sendMessage(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "MINE " + ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount));
                 mm.handleSold(econres.amount);
             } else {
-                econres = plugin.getNsa().getEcon().depositPlayer(p, soldItemsPrice);
+                econres = plugin.getEcon().depositPlayer(p, soldItemsPrice);
                 p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount));
 
             }
