@@ -23,7 +23,7 @@ Sell all sticks allow players to right click a chest and sell all the items that
 `/shopAdmin givesellallstick "player"`
 
 ### Admin GUI
-The admin gui can be enabled by SHIFT clicking any item. All ops and players who have "saphmerce.admin" will be able to use this feature.
+The admin gui can be enabled by ~~SHIFT~~ RIGHT clicking any item. All ops and players who have "saphmerce.admin" will be able to use this feature.
 
 #### Turning an item into a command item
 Command items are shop items that run a command when purchased instead of giving players the item displayed.
