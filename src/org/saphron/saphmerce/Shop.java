@@ -26,6 +26,7 @@ public class Shop {
     private boolean enabled;
     private double mineModeMultiplier;
     private List<Category> shopCategories;
+    private static final List<String> MINE_DROP_LORE = new ArrayList<>(Arrays.asList(ChatColor.LIGHT_PURPLE + "Mine Drop"));
     public ItemStackCreator itemStackCreator = new ItemStackCreator();
     public CategoryGUI categoryGUI = new CategoryGUI(this);
     public ShopItemGUI shopItemGUI = new ShopItemGUI(this);
@@ -273,9 +274,8 @@ public class Shop {
         for (ItemStack invItem : inventory.getContents()) {
             if(invItem != null) {
                 // Making sure that the item being sold is in fact a mine drop
-                // TODO: Fix this, it doesn't work currently
-                if(isInMindMode && !invItem.getItemMeta().hasLore() || !invItem.getItemMeta().getLore().contains("Mine Drop")) {
-                    continue;
+                if(isInMindMode && !isMineDrop(invItem)) {
+                   continue;
                 }
 
                 for(Category category : shopCategories) {
@@ -307,5 +307,18 @@ public class Shop {
         }
 
         return soldItems;
+    }
+
+    // Checking if an item is a mine drop
+    public boolean isMineDrop(ItemStack item) {
+        if(item.hasItemMeta()) {
+            if(item.getItemMeta().hasLore()) {
+                if(item.getItemMeta().getLore().equals(MINE_DROP_LORE)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -15,8 +15,9 @@ public class GeneralEvents implements Listener {
     public GeneralEvents(Saphmerce p) { plugin = p; }
 
     @EventHandler
-    public void onPlayerJoin(AsyncPlayerPreLoginEvent e) {
-        plugin.getProfileManager().addProfile(e.getUniqueId());
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        Player p = e.getPlayer();
+        plugin.getProfileManager().addProfile(p.getUniqueId());
 
     }
 
