@@ -21,7 +21,7 @@ public class ShopCommand implements CommandExecutor {
             if(args.length == 0) {
                 Player p = (Player) sender;
                 if(plugin.getShop().isEnabled()) {
-                    p.openInventory(plugin.getShop().categoryGUI.getCategoryInterface(p));
+                    p.openInventory(plugin.getShop().categoryGUI.getCategoryInterface());
                 } else {
                     p.sendMessage(ChatColor.RED + "The shop is currently disabled.");
                 }

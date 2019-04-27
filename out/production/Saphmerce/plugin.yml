@@ -1,8 +1,8 @@
 name: Saphmerce
 main: org.saphron.saphmerce.Saphmerce
-version: 1.0.0
+version: 1.1.0
 author: Andrei Georgescu
-depend: [NSA, Vault, Saphblock]
+depend: [NSA, Vault]
 softdepends: [HolographicDisplays]
 description: >
             Saphmerce - Mcmerce

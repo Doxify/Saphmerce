@@ -7,8 +7,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.saphron.saphmerce.Shop;
 import org.saphron.saphmerce.ShopItem;
+import org.saphron.saphmerce.utilities.ItemStackCreator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +29,7 @@ public class TransactionGUI {
         transactionItem.setAmount(amount);
 
         // Sell Option ItemStack
-        ItemStack sellItem = shop.itemStackCreator.createItemStack(
+        ItemStack sellItem = ItemStackCreator.createItemStack(
             Material.MINECART,
             ChatColor.RED + ChatColor.BOLD.toString() +  "Sell",
             Arrays.asList(
@@ -48,14 +50,14 @@ public class TransactionGUI {
         } else {
             sellAllItemLore.add(ChatColor.DARK_RED + "Couldn't find any " + shopItem.getName() + "(s).");
         }
-        ItemStack sellAllItem = shop.itemStackCreator.createItemStack(
+        ItemStack sellAllItem = ItemStackCreator.createItemStack(
             Material.EXPLOSIVE_MINECART,
             ChatColor.RED + ChatColor.BOLD.toString() + "Sell All",
             sellAllItemLore
         );
 
         // Buy All Option ItemStack
-        ItemStack buyItem = shop.itemStackCreator.createItemStack(
+        ItemStack buyItem = ItemStackCreator.createItemStack(
             Material.STORAGE_MINECART,
             ChatColor.GREEN + ChatColor.BOLD.toString() +  "Buy",
             Arrays.asList(
@@ -67,7 +69,7 @@ public class TransactionGUI {
         );
 
         // Add 1 ItemStack
-        ItemStack add1Item = shop.itemStackCreator.createItemStack(
+        ItemStack add1Item = ItemStackCreator.createItemStack(
                 Material.INK_SACK,
                 ChatColor.GREEN + "+ 1",
                 null
@@ -75,7 +77,7 @@ public class TransactionGUI {
         add1Item.setDurability((byte) 10);
 
         // Add 5 ItemStack
-        ItemStack add5Item = shop.itemStackCreator.createItemStack(
+        ItemStack add5Item = ItemStackCreator.createItemStack(
                 Material.INK_SACK,
                 ChatColor.GREEN + "+ 5",
                 null
@@ -84,7 +86,7 @@ public class TransactionGUI {
         add5Item.setAmount(5);
 
         // Add 10 ItemStack
-        ItemStack add10Item = shop.itemStackCreator.createItemStack(
+        ItemStack add10Item = ItemStackCreator.createItemStack(
                 Material.INK_SACK,
                 ChatColor.GREEN + "+ 10",
                 null
@@ -93,7 +95,7 @@ public class TransactionGUI {
         add10Item.setAmount(10);
 
         // Subtract 1 ItemStack
-        ItemStack subtract1Item = shop.itemStackCreator.createItemStack(
+        ItemStack subtract1Item = ItemStackCreator.createItemStack(
                 Material.INK_SACK,
                 ChatColor.RED + "- 1",
                 null
@@ -101,7 +103,7 @@ public class TransactionGUI {
         subtract1Item.setDurability((byte) 8);
 
         // Subtract 5 ItemStack
-        ItemStack subtract5Item = shop.itemStackCreator.createItemStack(
+        ItemStack subtract5Item = ItemStackCreator.createItemStack(
                 Material.INK_SACK,
                 ChatColor.RED + "- 5",
                 null
@@ -110,7 +112,7 @@ public class TransactionGUI {
         subtract5Item.setAmount(5);
 
         // Subtract 10 ItemStack
-        ItemStack subtract10Item = shop.itemStackCreator.createItemStack(
+        ItemStack subtract10Item = ItemStackCreator.createItemStack(
                 Material.INK_SACK,
                 ChatColor.RED + "- 10",
                 null
@@ -119,6 +121,11 @@ public class TransactionGUI {
         subtract10Item.setAmount(10);
 
 
+        if(shopItem.isCommandItem()) {
+            ItemMeta itemMeta = transactionItem.getItemMeta();
+            itemMeta.setDisplayName(ChatColor.LIGHT_PURPLE + shopItem.getName());
+            transactionItem.setItemMeta(itemMeta);
+        }
         transactionInventory.setItem(13, transactionItem);
 
         if(shopItem.isSellable()) {
@@ -138,7 +145,7 @@ public class TransactionGUI {
         transactionInventory.setItem(16, add10Item);
 
         // Bottom bar code
-        ItemStack[] bottomBarItems = shop.shopItemGUI.generateShopInterfaceBottomBar();
+        ItemStack[] bottomBarItems = ShopItemGUI.generateShopInterfaceBottomBar();
         int bottomBarCounter = 0;
         for(int i = 45; i < 54; i++) {
             transactionInventory.setItem(i, bottomBarItems[bottomBarCounter]);

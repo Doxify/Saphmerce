@@ -1,11 +1,9 @@
 package org.saphron.saphmerce;
 
-import com.saphron.nsa.NSA;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.saphron.saphblock.Saphblock;
 import org.saphron.saphmerce.commands.SellCommand;
 import org.saphron.saphmerce.commands.ShopAdminCommand;
 import org.saphron.saphmerce.commands.ShopCommand;
@@ -15,7 +13,6 @@ import java.security.Permission;
 
 public class Saphmerce extends JavaPlugin {
 
-    private Saphblock saphblock = null;
     private Shop shop = null;
     private FileManager fileManager = null;
     private ProfileManager profileManager = null;
@@ -23,13 +20,14 @@ public class Saphmerce extends JavaPlugin {
     private static Economy econ = null;
     private static Permission perms = null;
     private static Chat chat = null;
+    private static API api = null;
 
     @Override
     public void onEnable() {
-        saphblock = (Saphblock) this.getServer().getPluginManager().getPlugin("saphblock");
         profileManager = new ProfileManager();
         fileManager = new FileManager(this);
         shop = fileManager.loadShopFromFile();
+        api = new API(this);
 
         // Commands
         getCommand("shop").setExecutor(new ShopCommand(this));
@@ -55,8 +53,8 @@ public class Saphmerce extends JavaPlugin {
         profileManager.handleServerClose();
     }
 
+    public API getApi() { return api; }
     public Shop getShop() { return shop; }
-    public Saphblock getSaphblock() { return saphblock; }
     public ProfileManager getProfileManager() { return profileManager; }
     public Permission getPerms() { return perms; }
     public Chat getChat() { return chat; }

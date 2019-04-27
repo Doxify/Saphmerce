@@ -1,6 +1,7 @@
 package org.saphron.saphmerce;
 
 import org.bukkit.inventory.ItemStack;
+import org.saphron.saphmerce.guis.ShopItemGUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ public class Category {
     private ItemStack displayItem;
     private boolean enabled;
     private List<ShopItem> categoryItems;
+    private ShopItemGUI shopItemGUI;
 
 
     public Category(String name, ItemStack displayItem, List<ShopItem> categoryItems) {
@@ -18,6 +20,7 @@ public class Category {
         setDisplayItem(displayItem);
         setCategoryItems(categoryItems);
         setEnabled(true);
+        shopItemGUI = new ShopItemGUI(this);
     }
 
     public Category(String name, ItemStack displayItem) {
@@ -25,6 +28,7 @@ public class Category {
         setDisplayItem(displayItem);
         setEnabled(false);
         categoryItems = new ArrayList<>();
+        shopItemGUI = new ShopItemGUI(this);
     }
 
 
@@ -41,12 +45,16 @@ public class Category {
     public boolean addShopItem(ShopItem i) {
         if(categoryItems.size() < 45) {
             categoryItems.add(i);
+            shopItemGUI.generateShopItemGUI();
             return true;
         }
         return false;
     }
 
-    public void deleteShopItem(ShopItem i) { categoryItems.remove(i); }
+    public void deleteShopItem(ShopItem i) {
+        categoryItems.remove(i);
+        shopItemGUI.generateShopItemGUI();
+    }
 
 
     public String getName() { return name; }
@@ -77,5 +85,8 @@ public class Category {
         return null;
     }
 
+    public ShopItemGUI getShopItemGUI() {
+        return shopItemGUI;
+    }
 
 }

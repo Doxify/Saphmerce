@@ -2,8 +2,17 @@ package org.saphron.saphmerce;
 
 public class Profile {
 
-    Category clickedCategory = null;
-    ShopItem clickedShopItem = null;
+    private Category clickedCategory = null;
+    private ShopItem clickedShopItem = null;
+    private boolean sellColldown = false;
+
+    public boolean hasSellCooldown() {
+        return sellColldown;
+    }
+
+    public void setSellColldown(boolean sellColldown) {
+        this.sellColldown = sellColldown;
+    }
 
     public void setClickedCategory(Category category) {
         clickedCategory = category;

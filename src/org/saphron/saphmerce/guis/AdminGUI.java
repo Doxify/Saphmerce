@@ -7,23 +7,16 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.saphron.saphmerce.Category;
-import org.saphron.saphmerce.Shop;
 import org.saphron.saphmerce.ShopItem;
+import org.saphron.saphmerce.utilities.ItemStackCreator;
 
 import java.util.Arrays;
 
 public class AdminGUI {
 
-    Shop shop;
-
-    public AdminGUI(Shop s) {
-        shop = s;
-    }
-
-    public Inventory getShopItemAdminGUI(ShopItem shopItem) {
+    public static Inventory getShopItemAdminGUI(ShopItem shopItem) {
         Inventory shopAdminInventory = Bukkit.createInventory(null, 36, "Shop: Admin");
-        ItemStack[] bottomBar = shop.shopItemGUI.generateShopInterfaceBottomBar();
+        ItemStack[] bottomBar = ShopItemGUI.generateShopInterfaceBottomBar();
         int bottomBarCounter = 0;
         ItemStack shopItemStack = new ItemStack(shopItem.getDisplayItem());
         ItemMeta shopItemStackMeta = shopItemStack.getItemMeta();
@@ -40,31 +33,31 @@ public class AdminGUI {
         shopItemStack.setItemMeta(shopItemStackMeta);
 
 
-        ItemStack renameItem = shop.itemStackCreator.createItemStack(
+        ItemStack renameItem = ItemStackCreator.createItemStack(
                 Material.NAME_TAG,
                 ChatColor.LIGHT_PURPLE + "Rename",
                 Arrays.asList(ChatColor.GRAY + "Click to rename.")
         );
 
-        ItemStack editBuyPriceItem = shop.itemStackCreator.createItemStack(
+        ItemStack editBuyPriceItem = ItemStackCreator.createItemStack(
                 Material.STORAGE_MINECART,
                 ChatColor.LIGHT_PURPLE + "Change Buy Price",
                 Arrays.asList(ChatColor.GRAY + "Click to edit buy price")
         );
 
-        ItemStack editSellPriceItem = shop.itemStackCreator.createItemStack(
+        ItemStack editSellPriceItem = ItemStackCreator.createItemStack(
                 Material.EXPLOSIVE_MINECART,
                 ChatColor.LIGHT_PURPLE + "Change Sell Price",
                 Arrays.asList(ChatColor.GRAY + "Click to edit sale price")
         );
 
-        ItemStack commandItem = shop.itemStackCreator.createItemStack(
+        ItemStack commandItem = ItemStackCreator.createItemStack(
                 Material.PAPER,
                 ChatColor.LIGHT_PURPLE + "Command",
                 Arrays.asList(ChatColor.GRAY + (shopItem.isCommandItem() ? ChatColor.YELLOW + "/" + shopItem.getCommandString() : ChatColor.GREEN + "Click to set item command"))
         );
 
-        ItemStack deleteItem = shop.itemStackCreator.createItemStack(
+        ItemStack deleteItem = ItemStackCreator.createItemStack(
                 Material.REDSTONE,
                 ChatColor.RED + "Delete Item",
                 Arrays.asList(ChatColor.GRAY + "Click to delete item")

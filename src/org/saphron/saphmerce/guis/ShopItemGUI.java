@@ -9,17 +9,22 @@ import org.bukkit.inventory.ItemStack;
 import org.saphron.saphmerce.Category;
 import org.saphron.saphmerce.Shop;
 import org.saphron.saphmerce.ShopItem;
+import org.saphron.saphmerce.utilities.ItemStackCreator;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ShopItemGUI {
 
-    Shop shop;
+    private Category category;
+    private Inventory shopInventory;
 
-    public ShopItemGUI(Shop s) { shop = s; }
+    public ShopItemGUI(Category category) {
+        this.category = category;
+        generateShopItemGUI();
+    }
 
-    public Inventory generateShopItemGUI(Player p, Category category) {
+    public void generateShopItemGUI() {
         List<ShopItem> shopItems = category.getCategoryItems();
         Inventory shopInventory = Bukkit.createInventory(null, 54, "Shop: Items");
         ItemStack[] bottomBarItems = generateShopInterfaceBottomBar();
@@ -27,7 +32,7 @@ public class ShopItemGUI {
 
         for(int i = 0; i < shopItems.size(); i++) {
             ShopItem shopItem = shopItems.get(i);
-            shopInventory.setItem(i, shop.itemStackCreator.createShopItemStack(shopItem));
+            shopInventory.setItem(i, ItemStackCreator.createShopItemStack(shopItem));
         }
 
         // Bottom Bar Code
@@ -38,31 +43,37 @@ public class ShopItemGUI {
             bottomBarCounter++;
         }
 
-        return shopInventory;
+        this.shopInventory = shopInventory;
     }
 
-    public ItemStack[] generateShopInterfaceBottomBar() {
+    public static ItemStack[] generateShopInterfaceBottomBar() {
         ItemStack bottomBar[] = new ItemStack[9];
 
         for(int i = 0; i < 9; i++) {
             if(i == 1) {
-                bottomBar[i] = shop.itemStackCreator.createItemStack(
-                        Material.IRON_DOOR,
+                bottomBar[i] = ItemStackCreator.createItemStack(
+                        Material.STAINED_GLASS_PANE,
                         ChatColor.RED + "Return",
                         Arrays.asList(ChatColor.GRAY + "Click to go back")
                 );
+                bottomBar[i].setDurability((short) 1);
             } else if(i == 7) {
-                bottomBar[i] = shop.itemStackCreator.createItemStack(
-                        Material.BARRIER,
+                bottomBar[i] = ItemStackCreator.createItemStack(
+                        Material.STAINED_GLASS_PANE,
                         ChatColor.RED + "Exit",
                         Arrays.asList(ChatColor.GRAY + "Click to exit shop")
                 );
+                bottomBar[i].setDurability((short) 14);
             } else {
-                bottomBar[i] = shop.itemStackCreator.createPlaceholderItem();
+                bottomBar[i] = ItemStackCreator.createPlaceholderItem();
             }
         }
 
         return bottomBar;
+    }
+
+    public Inventory getShopInventory() {
+        return shopInventory;
     }
 
 }

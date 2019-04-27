@@ -41,7 +41,7 @@ public class SellAllStickEvent implements Listener {
                             Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    if(!shop.handleSellAllInventory(p, clickedChest.getInventory(), false)) {
+                                    if(!plugin.getApi().handleSellAllInventory(p, clickedChest.getInventory())) {
                                         p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in this chest.");
                                     }
                                 }
@@ -55,7 +55,7 @@ public class SellAllStickEvent implements Listener {
     }
 
     public boolean validate(ItemStack sellAllStickItem) {
-        ItemStack sellAllStick = shop.getSellAllStick();
+        ItemStack sellAllStick = plugin.getApi().getSellAllStick();
         if(sellAllStick.isSimilar(sellAllStickItem)) {
             return true;
         }

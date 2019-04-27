@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.saphron.saphmerce.*;
+import org.saphron.saphmerce.guis.AdminGUI;
 import org.saphron.saphmerce.utilities.InventoryGuard;
 
 public class ShopInterfaceEvents implements Listener {
@@ -54,14 +55,14 @@ public class ShopInterfaceEvents implements Listener {
                         // Handling clicks in the category menu
                         Category clickedCategory = shop.getShopCategoryByName(clickedItemName);
                         if(clickedCategory != null) {
-                            p.openInventory(shop.shopItemGUI.generateShopItemGUI(p, clickedCategory));
+                            p.openInventory(clickedCategory.getShopItemGUI().getShopInventory());
                             profile.setClickedCategory(clickedCategory);
                             return;
                         }
                     } else if(inventoryName.equalsIgnoreCase("SHOP: ITEMS")) {
                         // Uesr returns from items view to category view
                         if(clickedItemName.equalsIgnoreCase("RETURN")) {
-                            p.openInventory(shop.categoryGUI.getCategoryInterface(p));
+                            p.openInventory(shop.categoryGUI.getCategoryInterface());
                             profile.clearClickedItems();
                             return;
                         } else {
@@ -70,7 +71,7 @@ public class ShopInterfaceEvents implements Listener {
                             if(clickedItem != null) {
                                 profile.setClickedShopItem(clickedItem);
                                 if(e.getClick().isRightClick() && p.hasPermission("saphmerce.admin")) {
-                                    p.openInventory(shop.adminGUI.getShopItemAdminGUI(clickedItem));
+                                    p.openInventory(AdminGUI.getShopItemAdminGUI(clickedItem));
                                     return;
                                 } else {
                                     p.openInventory(shop.transactionGUI.getTransactionGUI(clickedItem, p, 1));
@@ -82,52 +83,6 @@ public class ShopInterfaceEvents implements Listener {
                 }
             }
         }
-//        String inventoryName = e.getInventory().getName();
-//
-//        if(inventoryName.toUpperCase().contains("SHOP") && e.getCurrentItem() != null) {
-//            e.setCancelled(true);
-//            if(e.getCurrentItem().getType() != Material.AIR) {
-//                Player p = (Player) e.getWhoClicked();
-//                Profile profile = plugin.getProfileManager().getProfile(p.getUniqueId());
-//                String clickedItemName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
-//
-//                if(clickedItemName.equalsIgnoreCase("EXIT")) {
-//                    p.closeInventory();
-//
-//                } else {
-//                    if(!clickedItemName.equalsIgnoreCase(" ")) {
-//                        if(inventoryName.equalsIgnoreCase("SHOP: CATEGORIES")) {
-//                            Category clickedCategory = shop.getShopCategoryByName(clickedItemName);
-//
-//                            if(clickedCategory != null) {
-//                                p.openInventory(shop.shopItemGUI.generateShopItemGUI(p, clickedCategory));
-//                                profile.setClickedCategory(clickedCategory);
-//                            }
-//
-//                        } else if(inventoryName.equalsIgnoreCase("SHOP: ITEMS")) {
-//
-//                            // Uesr returns from items view to category view
-//                            if(clickedItemName.equalsIgnoreCase("RETURN")) {
-//                                p.openInventory(shop.categoryGUI.getCategoryInterface(p));
-//                                profile.clearClickedItems();
-//
-//                            } else {
-//                                // User clicked on a shop item.
-//                                ShopItem clickedItem = profile.getClickedCategory().getShopItemByName(clickedItemName);
-//                                if(clickedItem != null) {
-//                                    profile.setClickedShopItem(clickedItem);
-//                                    if(e.getClick().isShiftClick() && p.hasPermission("saphmerce.admin")) {
-//                                        p.openInventory(shop.adminGUI.getShopItemAdminGUI(clickedItem));
-//                                    } else {
-//                                        p.openInventory(shop.transactionGUI.getTransactionGUI(clickedItem, p, 1));
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
 
 }

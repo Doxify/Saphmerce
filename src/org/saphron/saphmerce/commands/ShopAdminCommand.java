@@ -39,6 +39,7 @@ public class ShopAdminCommand implements CommandExecutor {
                         if(displayItem.getType() != Material.AIR) {
                             Category category = new Category(categoryName, displayItem);
                             plugin.getShop().addCategory(category);
+                            plugin.getShop().categoryGUI.generateCategoryInterface();
                             p.sendMessage(ChatColor.GREEN + "Successfully created new shop category: " + category.getName());
                         } else {
                             p.sendMessage(ChatColor.RED + "You must be holding the item you want to represent the category in your hand.");
@@ -48,6 +49,7 @@ public class ShopAdminCommand implements CommandExecutor {
                     }
                     case "DELETECATEGORY": {
                         if(plugin.getShop().deleteCategory(categoryName)) {
+                            plugin.getShop().categoryGUI.generateCategoryInterface();
                             p.sendMessage(ChatColor.GREEN + "Successfully deleted category: " + categoryName);
                         } else {
                             p.sendMessage(ChatColor.RED + "Could not find a category with that name.");
@@ -59,10 +61,10 @@ public class ShopAdminCommand implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[1]);
                         if(target != null) {
                             if(target.getInventory().firstEmpty() != -1) {
-                                target.getInventory().addItem(plugin.getShop().getSellAllStick());
+                                target.getInventory().addItem(plugin.getApi().getSellAllStick());
                                 target.sendMessage(ChatColor.GREEN + "You've been given a sell all stick, keep it safe!");
                             } else {
-                                target.getWorld().dropItem(target.getLocation(), plugin.getShop().getSellAllStick());
+                                target.getWorld().dropItem(target.getLocation(), plugin.getApi().getSellAllStick());
                                 target.sendMessage(ChatColor.GREEN + "You've been given a sell all stick, keep it safe!");
                                 target.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "There was no room in your inventory so your sell all stick has been dropped on the ground!");
                             }

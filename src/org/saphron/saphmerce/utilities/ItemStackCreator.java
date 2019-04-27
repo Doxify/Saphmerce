@@ -15,7 +15,7 @@ public class ItemStackCreator {
     private static NumberFormat df = NumberFormat.getCurrencyInstance();
 
 
-    public ItemStack createItemStack(Material guiMaterial, String name, List<String> lore) {
+    public static ItemStack createItemStack(Material guiMaterial, String name, List<String> lore) {
         ItemStack item = new ItemStack(guiMaterial, 1);
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setDisplayName(name);
@@ -25,7 +25,7 @@ public class ItemStackCreator {
         return item;
     }
 
-    public ItemStack createShopItemStack(ShopItem shopItem) {
+    public static ItemStack createShopItemStack(ShopItem shopItem) {
         ItemStack item = new ItemStack(shopItem.getDisplayItem());
         ItemMeta itemMeta = item.getItemMeta();
         List<String> itemLore = new ArrayList<>();
@@ -60,7 +60,7 @@ public class ItemStackCreator {
         return item;
     }
 
-    public ItemStack createPlaceholderItem() {
+    public static ItemStack createPlaceholderItem() {
         ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setDisplayName(" ");
