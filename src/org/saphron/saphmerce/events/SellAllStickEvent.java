@@ -13,6 +13,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.saphron.saphmerce.Profile;
 import org.saphron.saphmerce.Saphmerce;
 import org.saphron.saphmerce.Shop;
 
@@ -36,16 +37,22 @@ public class SellAllStickEvent implements Listener {
                     if(p.getItemInHand().getType() == Material.STICK) {
                         if(validate(p.getItemInHand())) {
                             e.setCancelled(true);
-                            Chest clickedChest = (Chest) e.getClickedBlock().getState();
+                            Profile profile = plugin.getProfileManager().getProfile(p.getUniqueId());
 
-                            Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    if(!plugin.getApi().handleSellAllInventory(p, clickedChest.getInventory())) {
-                                        p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in this chest.");
+                            if(!profile.hasSellCooldown()) {
+                                Chest clickedChest = (Chest) e.getClickedBlock().getState();
+                                Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(!plugin.getApi().handleSellAllInventory(p, clickedChest.getInventory())) {
+                                            p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in this chest.");
+                                        }
+                                        plugin.getApi().handleSellCooldown(profile);
                                     }
-                                }
-                            });
+                                });
+                            } else {
+                                p.sendMessage(ChatColor.RED + "You can only use the /sell command once every " + plugin.getApi().COOLDOWN + " seconds.");
+                            }
 
                         }
                     }

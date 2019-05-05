@@ -11,10 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.saphron.saphmerce.utilities.ItemStackCreator;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Andrei Georgescu
@@ -23,6 +20,7 @@ import java.util.List;
 public class API {
 
     private static Saphmerce plugin;
+    public static final int COOLDOWN = 10;
     public static final String SPOINTS_PREFIX = ChatColor.RED + "s" + ChatColor.BOLD.toString() + "POINTS " + ChatColor.GOLD + ChatColor.BOLD.toString() + "◗ ";
     public static final String MINE_PREFIX = ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "MINE " + ChatColor.GOLD + ChatColor.BOLD.toString() + "◗ ";
     public static final String GENERATOR_PREFIX = ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "GENERATOR " + ChatColor.GOLD + ChatColor.BOLD.toString() + "◗ ";
@@ -33,6 +31,10 @@ public class API {
      */
     public API(Saphmerce plugin) {
         this.plugin = plugin;
+    }
+
+    public static Profile getProfile(UUID uuid) {
+        return plugin.getProfileManager().getProfile(uuid);
     }
 
     /**
@@ -197,6 +199,32 @@ public class API {
         return soldItems;
     }
 
+    public static double handleSellAllInventory(OfflinePlayer p, Inventory inventory) {
+        boolean soldItems = false;
+        double soldItemsPrice = 0;
+
+        for (ItemStack invItem : inventory.getContents()) {
+            if(invItem != null) {
+                for(Category category : plugin.getShop().getShopCategories()) {
+                    ShopItem shopItem = category.getShopItemByItemStack(invItem);
+                    if(shopItem != null) {
+                        if(shopItem.isSellable()) {
+                            soldItemsPrice += (shopItem.getSellPrice() * invItem.getAmount());
+                            inventory.removeItem(invItem);
+                            soldItems = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(soldItems) {
+            plugin.getEcon().depositPlayer(p, soldItemsPrice);
+        }
+
+        return soldItemsPrice;
+    }
+
     public static boolean handleGeneratorAutoSell(OfflinePlayer p, Collection<Inventory> inventories) {
         boolean soldItems = false;
         int soldItemsAmount = 0;
@@ -230,6 +258,16 @@ public class API {
         }
 
         return soldItems;
+    }
+
+    public static void handleSellCooldown(Profile profile) {
+        profile.setSellColldown(true);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                profile.setSellColldown(false);
+            }
+        }, COOLDOWN * 20);
     }
 
 

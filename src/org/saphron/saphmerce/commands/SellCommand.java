@@ -17,7 +17,6 @@ import org.saphron.saphmerce.ShopItem;
 public class SellCommand implements CommandExecutor {
 
     Saphmerce plugin;
-    private static final int COOLDOWN = 10;
 
     public SellCommand(Saphmerce p) { plugin = p; }
 
@@ -42,7 +41,7 @@ public class SellCommand implements CommandExecutor {
 
                                             if (shopItem != null) {
                                                 if (shopItem.isSellable()) {
-                                                    handleSellCooldown(profile);
+                                                    plugin.getApi().handleSellCooldown(profile);
                                                     plugin.getApi().handleSell(p, shopItem, p.getItemInHand().getAmount());
                                                     break;
                                                 } else {
@@ -61,7 +60,7 @@ public class SellCommand implements CommandExecutor {
                                 p.sendMessage(ChatColor.RED + "You must be holding the item you want to sell.");
                             }
                         } else {
-                            p.sendMessage(ChatColor.RED + "You can only use the /sell command once every " + COOLDOWN + " seconds.");
+                            p.sendMessage(ChatColor.RED + "You can only use the /sell command once every " + plugin.getApi().COOLDOWN + " seconds.");
                         }
 
 
@@ -73,7 +72,7 @@ public class SellCommand implements CommandExecutor {
                                 Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
                                     @Override
                                     public void run() {
-                                        handleSellCooldown(profile);
+                                        plugin.getApi().handleSellCooldown(profile);
                                         if(!plugin.getApi().handleSellAllInventory(p, p.getInventory())) {
                                             p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in your inventory!");
                                         }
@@ -83,7 +82,7 @@ public class SellCommand implements CommandExecutor {
                                 p.sendMessage(ChatColor.RED + "Usage: /sell all");
                             }
                         } else {
-                            p.sendMessage(ChatColor.RED + "You can only use the /sell command once every " + COOLDOWN + " seconds.");
+                            p.sendMessage(ChatColor.RED + "You can only use the /sell command once every " + plugin.getApi().COOLDOWN + " seconds.");
                         }
                         break;
 
@@ -99,16 +98,6 @@ public class SellCommand implements CommandExecutor {
             sender.sendMessage(Utilities.NON_PLAYER_SENDER);
         }
         return true;
-    }
-
-    private void handleSellCooldown(Profile profile) {
-        profile.setSellColldown(true);
-        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                profile.setSellColldown(false);
-            }
-        }, COOLDOWN * 20);
     }
 
 }
