@@ -161,7 +161,7 @@ public class API {
             EconomyResponse econres;
             if (plugin.getShop().getMineModeMultiplier() != 0) {
                 econres = plugin.getEcon().depositPlayer(p, soldItemsPrice * plugin.getShop().getMineModeMultiplier());
-                p.sendMessage(ChatColor.DARK_GREEN + ChatColor.BOLD.toString() + "MINE " + ChatColor.GREEN + "Successfully sold " + soldItemsAmount + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount));
+                p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount) + ChatColor.AQUA + "w/ multiplier");
             }
             return soldItemsPrice * plugin.getShop().getMineModeMultiplier();
         } else {
