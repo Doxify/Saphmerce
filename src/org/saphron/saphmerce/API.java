@@ -33,6 +33,11 @@ public class API {
         this.plugin = plugin;
     }
 
+    /**
+     *
+     * @param uuid
+     * @return Saphmerce#Profile
+     */
     public static Profile getProfile(UUID uuid) {
         return plugin.getProfileManager().getProfile(uuid);
     }
@@ -83,6 +88,10 @@ public class API {
         }
     }
 
+    /**
+     *
+     * @return Sell All ItemStack
+     */
     public static ItemStack getSellAllStick() {
         // DO NOT CHANGE NAME OR LORE, IT WILL BREAK ALL PREVIOUS SELL ALL STICKS SPAWNED.
         ItemStack sellAllStick = ItemStackCreator.createItemStack(
@@ -94,15 +103,27 @@ public class API {
         return sellAllStick;
     }
 
+    /**
+     *
+     * @param p player object
+     * @param transactionShopItem ShopItem
+     * @param transactionItemAmount amount to sell
+     */
     public void handleSell(Player p, ShopItem transactionShopItem, int transactionItemAmount) {
+        boolean hasMultiplier = p.hasPermission("saphmerce.multiplier");
         ItemStack sellItem = new ItemStack(transactionShopItem.getDisplayItem());
         if(plugin.getShop().hasEnoughItemsInInventory(p, sellItem, transactionItemAmount)) {
+            EconomyResponse econres;
             plugin.getShop().removeItemFromInventory(p, sellItem, transactionItemAmount);
 
-            EconomyResponse econres = plugin.getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * transactionItemAmount));
+            if(hasMultiplier) {
+                econres = plugin.getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * transactionItemAmount * plugin.getShop().getMultiplier()));
+            } else {
+                econres = plugin.getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * transactionItemAmount));
+            }
 
             if(econres.transactionSuccess()) {
-                p.sendMessage(ChatColor.GREEN + "Successful sale: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
+                p.sendMessage(ChatColor.GREEN + "Successful sale: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount) + (hasMultiplier ? ChatColor.AQUA + " [Multiplier]" : ""));
             } else {
                 p.sendMessage(ChatColor.GREEN + "Transaction failed, contact an administrator.");
             }
@@ -112,16 +133,31 @@ public class API {
         }
     }
 
+    /**
+     *
+     * @param p player object
+     * @param transactionShopItem ShopItem
+     */
     public void handleSellAll(Player p, ShopItem transactionShopItem) {
+        boolean hasMultiplier = p.hasPermission("saphmerce.multiplier");
         ItemStack sellAllItem = new ItemStack(transactionShopItem.getDisplayItem());
         int itemsInInventory = plugin.getShop().getItemCountFromInventory(p, sellAllItem);
 
         if(itemsInInventory != 0) {
+            EconomyResponse econres;
             plugin.getShop().removeItemFromInventory(p, sellAllItem, itemsInInventory);
-            EconomyResponse econres = plugin.getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * itemsInInventory));
+
+
+            // Handling multiplier permission
+            if(hasMultiplier) {
+                econres = plugin.getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * itemsInInventory * plugin.getShop().getMultiplier()));
+                p.sendMessage(ChatColor.GREEN + "Successfully sold " + itemsInInventory + (itemsInInventory > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount) + ChatColor.AQUA + " [Multiplier]");
+            } else {
+                econres = plugin.getEcon().depositPlayer(p, (transactionShopItem.getSellPrice() * itemsInInventory));
+            }
 
             if(econres.transactionSuccess()) {
-                p.sendMessage(ChatColor.GREEN + "Successful sale: " + itemsInInventory + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
+                p.sendMessage(ChatColor.GREEN + "Successful sale: " + itemsInInventory + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount) + (hasMultiplier ? ChatColor.AQUA + " [Multiplier]" : ""));
             } else {
                 p.sendMessage(ChatColor.GREEN + "Transaction failed, contact an administrator.");
             }
@@ -131,6 +167,12 @@ public class API {
 
     }
 
+    /**
+     *
+     * @param p player object
+     * @param inventory player's inventory
+     * @return the amount sold as a double
+     */
     public static double handleSellAllInventoryMineMode(Player p, Inventory inventory) {
         boolean soldItems = false;
         int soldItemsAmount = 0;
@@ -159,16 +201,22 @@ public class API {
 
         if (soldItems) {
             EconomyResponse econres;
-            if (plugin.getShop().getMineModeMultiplier() != 0) {
-                econres = plugin.getEcon().depositPlayer(p, soldItemsPrice * plugin.getShop().getMineModeMultiplier());
-                p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount) + ChatColor.AQUA + "w/ multiplier");
+            if (plugin.getShop().getMultiplier() > 0) {
+                econres = plugin.getEcon().depositPlayer(p, soldItemsPrice * plugin.getShop().getMultiplier());
+                p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount) + ChatColor.AQUA + " [Multiplier]");
             }
-            return soldItemsPrice * plugin.getShop().getMineModeMultiplier();
+            return soldItemsPrice * plugin.getShop().getMultiplier();
         } else {
             return 0;
         }
     }
 
+    /**
+     *
+     * @param p player object
+     * @param inventory player's inventory
+     * @return whether or not anything was sold
+     */
     public static boolean handleSellAllInventory(Player p, Inventory inventory) {
         boolean soldItems = false;
         int soldItemsAmount = 0;
@@ -192,6 +240,13 @@ public class API {
 
         if(soldItems) {
             EconomyResponse econres;
+            // Handling multiplier permission
+            if(p.hasPermission("saphmerce.multiplier")) {
+                econres = plugin.getEcon().depositPlayer(p, soldItemsPrice * plugin.getShop().getMultiplier());
+                p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount) + ChatColor.AQUA + " [Multiplier]");
+                return soldItems;
+            }
+
             econres = plugin.getEcon().depositPlayer(p, soldItemsPrice);
             p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount));
         }
@@ -199,6 +254,12 @@ public class API {
         return soldItems;
     }
 
+    /**
+     *
+     * @param p offlineplayer object
+     * @param inventory inventory to sell items from
+     * @return the price of the sale
+     */
     public static double handleSellAllInventory(OfflinePlayer p, Inventory inventory) {
         boolean soldItems = false;
         double soldItemsPrice = 0;
@@ -219,12 +280,24 @@ public class API {
         }
 
         if(soldItems) {
+            // Handling multiplier permission
+            if(plugin.getPerms().playerHas(null, p, "saphmerce.multiplier")) {
+                plugin.getEcon().depositPlayer(p, soldItemsPrice * plugin.getShop().getMultiplier());
+                return soldItemsPrice;
+            }
+
             plugin.getEcon().depositPlayer(p, soldItemsPrice);
         }
 
         return soldItemsPrice;
     }
 
+    /**
+     *
+     * @param p offlineplayer object
+     * @param inventories inventories to sell items from
+     * @return whether or not anything was sold
+     */
     public static boolean handleGeneratorAutoSell(OfflinePlayer p, Collection<Inventory> inventories) {
         boolean soldItems = false;
         int soldItemsAmount = 0;
@@ -250,16 +323,28 @@ public class API {
 
         if(soldItems) {
             EconomyResponse econres;
-            econres = plugin.getEcon().depositPlayer(p, soldItemsPrice);
+            boolean hasMultiplier = false;
+            // Handling multiplier permission
+            if(plugin.getPerms().playerHas(null, p, "saphmerce.multiplier")) {
+                econres = plugin.getEcon().depositPlayer(p, soldItemsPrice * plugin.getShop().getMultiplier());
+                hasMultiplier = true;
+            } else {
+                econres = plugin.getEcon().depositPlayer(p, soldItemsPrice);
+            }
+
             if(p.isOnline()) {
                 Player player = p.getPlayer();
-                player.sendMessage(GENERATOR_PREFIX + ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount));
+                player.sendMessage(GENERATOR_PREFIX + ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount) + (hasMultiplier ? ChatColor.AQUA + " [Multiplier]" : ""));
             }
         }
 
         return soldItems;
     }
 
+    /**
+     *
+     * @param profile saphmerce profile
+     */
     public static void handleSellCooldown(Profile profile) {
         profile.setSellColldown(true);
         Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
@@ -269,8 +354,5 @@ public class API {
             }
         }, COOLDOWN * 20);
     }
-
-
-
 
 }

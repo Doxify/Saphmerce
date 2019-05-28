@@ -2,6 +2,7 @@ package org.saphron.saphmerce;
 
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.saphron.saphmerce.commands.SellCommand;
@@ -9,14 +10,13 @@ import org.saphron.saphmerce.commands.ShopAdminCommand;
 import org.saphron.saphmerce.commands.ShopCommand;
 import org.saphron.saphmerce.events.*;
 
-import java.security.Permission;
 
 public class Saphmerce extends JavaPlugin {
 
     private Shop shop = null;
     private FileManager fileManager = null;
     private ProfileManager profileManager = null;
-    private double mineModeMultiplier = 0;
+    private double multiplier = 0;
     private static Economy econ = null;
     private static Permission perms = null;
     private static Chat chat = null;
@@ -60,8 +60,8 @@ public class Saphmerce extends JavaPlugin {
     public Chat getChat() { return chat; }
     public Economy getEcon() { return econ; }
 
-    public void setMineModeMultiplier(double m) { mineModeMultiplier = m; }
-    public double getMineModeMultiplier() { return mineModeMultiplier; }
+    public void setMultiplier(double m) { multiplier = m; }
+    public double getMultiplier() { return multiplier; }
 
     private boolean setupEcon() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {

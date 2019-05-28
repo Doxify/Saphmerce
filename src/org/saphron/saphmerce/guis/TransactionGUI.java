@@ -25,6 +25,7 @@ public class TransactionGUI {
     public Inventory getTransactionGUI(ShopItem shopItem, Player p, int amount) {
         Inventory transactionInventory = Bukkit.createInventory(null, 54, "Shop: Transaction");
         ItemStack transactionItem = new ItemStack(shopItem.getDisplayItem());
+        boolean hasMultiplier = p.hasPermission("saphmerce.multiplier");
         int transactionItemsInInventoryCount = shop.getItemCountFromInventory(p, transactionItem);
         transactionItem.setAmount(amount);
 
@@ -34,7 +35,7 @@ public class TransactionGUI {
             ChatColor.RED + ChatColor.BOLD.toString() +  "Sell",
             Arrays.asList(
                 ChatColor.GRAY + "Amount: " + ChatColor.YELLOW + amount,
-                ChatColor.GRAY + "Price: " + ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getSellPrice() * amount),
+                ChatColor.GRAY + "Price: " + (hasMultiplier ? ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getSellPrice() * amount * shop.getMultiplier()) + ChatColor.AQUA + " [Multiplier]" : ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getSellPrice() * amount)),
                 "",
                 ChatColor.GRAY + "Click to confirm sale."
             )
@@ -44,7 +45,7 @@ public class TransactionGUI {
         List<String> sellAllItemLore = new ArrayList<>();
         if(transactionItemsInInventoryCount > 0) {
             sellAllItemLore.add(ChatColor.GRAY + "Amount: " + ChatColor.YELLOW + transactionItemsInInventoryCount);
-            sellAllItemLore.add(ChatColor.GRAY + "Price: " + ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getSellPrice() * transactionItemsInInventoryCount));
+            sellAllItemLore.add(ChatColor.GRAY + "Price: " + (hasMultiplier ? ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getSellPrice() * transactionItemsInInventoryCount * shop.getMultiplier()) + ChatColor.AQUA + " [Multiplier]" : ChatColor.GREEN + Utilities.moneyFormat.format(shopItem.getSellPrice() * transactionItemsInInventoryCount)));
             sellAllItemLore.add("");
             sellAllItemLore.add(ChatColor.GRAY + "Click to confirm sale.");
         } else {

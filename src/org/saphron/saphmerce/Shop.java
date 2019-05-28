@@ -12,7 +12,7 @@ public class Shop {
 
     Saphmerce plugin;
     private boolean enabled;
-    private double mineModeMultiplier;
+    private double multiplier = 1;
     private List<Category> shopCategories;
     private static final List<String> MINE_DROP_LORE = new ArrayList<>(Arrays.asList(ChatColor.LIGHT_PURPLE + "Mine Drop"));
     public CategoryGUI categoryGUI = new CategoryGUI(this);
@@ -21,7 +21,7 @@ public class Shop {
 
     public Shop(Saphmerce p, List<Category> shopCategories) {
         plugin = p;
-        mineModeMultiplier = plugin.getMineModeMultiplier();
+        multiplier = plugin.getMultiplier();
         if(shopCategories.size() > 0) {
             setShopCategories(shopCategories);
             setEnabled(true);
@@ -167,8 +167,8 @@ public class Shop {
         return count;
     }
 
-    public double getMineModeMultiplier() {
-        return mineModeMultiplier;
+    public double getMultiplier() {
+        return multiplier;
     }
 
     // Checking if an item is a mine drop

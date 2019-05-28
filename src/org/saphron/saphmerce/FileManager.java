@@ -20,7 +20,7 @@ public class FileManager {
     public FileManager(Saphmerce p) {
         plugin = p;
         serializer = new ShopSerializer();
-        plugin.setMineModeMultiplier(getMineModeMultiplier());
+        plugin.setMultiplier(getMultiplier());
     }
 
 
@@ -76,12 +76,12 @@ public class FileManager {
     }
 
     // Redo this as you add more config options
-    public double getMineModeMultiplier() {
+    public double getMultiplier() {
         try {
             Object configFileParsed = new JSONParser().parse(new FileReader("./plugins/Saphmerce/config.json"));
             JSONObject configFileJson = (JSONObject) configFileParsed;
-            double mineModeMultiplier = Double.parseDouble((String) configFileJson.get("mineModeMultiplier"));
-            return mineModeMultiplier;
+            double multiplier = Double.parseDouble((String) configFileJson.get("multiplier"));
+            return multiplier;
 
         } catch (IOException e) {
             e.printStackTrace();
