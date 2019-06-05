@@ -9,11 +9,9 @@
     <list default="true" id="51c4fa31-d6c2-44a3-a22a-7b1e2d3172b4" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/Saphmerce_jar/Saphmerce.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Saphmerce_jar/Saphmerce.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/commands/ShopAdminCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Saphmerce/org/saphron/saphmerce/commands/ShopAdminCommand.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/API.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/API.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/Saphmerce.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/Saphmerce.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/guis/TransactionGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/guis/TransactionGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopAdminCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopAdminCommand.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,55 +26,8 @@
       <file leaf-file-name="API.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/API.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1429">
-              <caret line="358" selection-start-line="358" selection-end-line="358" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1302#1303#0" expanded="true" />
-                <element signature="e#1368#1369#0" expanded="true" />
-                <element signature="e#15144#15145#0" expanded="true" />
-                <element signature="e#15206#15207#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ShopItemGUI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/guis/ShopItemGUI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="34" column="69" selection-start-line="34" selection-start-column="69" selection-end-line="34" selection-end-column="69" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TransactionGUI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/guis/TransactionGUI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-587">
-              <caret line="49" column="75" selection-start-line="49" selection-start-column="75" selection-end-line="49" selection-end-column="75" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Shop.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="625">
-              <caret line="170" column="25" selection-start-line="170" selection-start-column="25" selection-end-line="170" selection-end-column="25" />
-              <folding>
-                <element signature="e#5494#5495#0" expanded="true" />
-                <element signature="e#5535#5536#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Saphmerce.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/Saphmerce.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="676">
-              <caret line="59" column="38" selection-start-line="59" selection-start-column="38" selection-end-line="59" selection-end-column="38" />
+            <state relative-caret-position="77">
+              <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -84,45 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/FileManager.java">
+      <file leaf-file-name="ShopTransactionEvent.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/events/ShopTransactionEvent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SellCommand.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/commands/SellCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="62" column="133" selection-start-line="62" selection-start-column="133" selection-end-line="62" selection-end-column="133" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ShopCommand.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="23" column="71" selection-start-line="23" selection-start-column="71" selection-end-line="23" selection-end-column="71" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CategoryGUI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/guis/CategoryGUI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="558">
-              <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
-              <folding>
-                <element signature="e#2777#2778#0" expanded="true" />
-                <element signature="e#2817#2818#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="996">
+              <caret line="101" column="48" lean-forward="true" selection-start-line="101" selection-start-column="48" selection-end-line="101" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -147,6 +64,7 @@
       <find>shopItem</find>
       <find>mineModeMultiplier</find>
       <find>getMineModeMultiplier</find>
+      <find>generator</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -165,7 +83,6 @@
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/ShopAutoSell.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/Profile.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/utilities/ItemStackCreator.java" />
-        <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopAdminCommand.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/Category.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopCommand.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/events/ShopTransactionEvent.java" />
@@ -179,14 +96,16 @@
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/events/SellAllStickEvent.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/Saphmerce.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/FileManager.java" />
-        <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/API.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/guis/TransactionGUI.java" />
         <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java" />
+        <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopAdminCommand.java" />
+        <option value="$PROJECT_DIR$/src/org/saphron/saphmerce/API.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="1">
-    <option name="y" value="23" />
+    <option name="x" value="326" />
+    <option name="y" value="178" />
     <option name="width" value="3008" />
     <option name="height" value="1625" />
   </component>
@@ -196,9 +115,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -260,6 +176,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -345,7 +264,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="3008" height="1625" extended-state="6" />
+    <frame x="326" y="178" width="3008" height="1625" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -356,21 +275,21 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.13438438" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.13169786" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17397168" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17869183" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
       <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -379,7 +298,7 @@
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1203336" />
@@ -387,7 +306,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Image Layers" order="6" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="4" />
@@ -610,24 +529,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopAdminCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="760">
-          <caret line="111" column="123" selection-start-line="111" selection-start-column="123" selection-end-line="111" selection-end-column="123" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/ShopItem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/events/ShopTransactionEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1872">
-          <caret line="111" column="104" selection-start-line="111" selection-start-column="104" selection-end-line="111" selection-end-column="104" />
         </state>
       </provider>
     </entry>
@@ -687,13 +592,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/events/ShopInterfaceEvents.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1260">
-          <caret line="80" column="25" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/events/SellAllStickEvent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -703,7 +601,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/commands/SellCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
+        <state relative-caret-position="1116">
           <caret line="62" column="133" selection-start-line="62" selection-start-column="133" selection-end-line="62" selection-end-column="133" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -711,27 +609,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/guis/ShopItemGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="23" column="71" selection-start-line="23" selection-start-column="71" selection-end-line="23" selection-end-column="71" />
+        <state relative-caret-position="396">
+          <caret line="34" column="69" selection-start-line="34" selection-start-column="69" selection-end-line="34" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/guis/CategoryGUI.java">
+    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/events/ShopInterfaceEvents.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
-          <folding>
-            <element signature="e#2777#2778#0" expanded="true" />
-            <element signature="e#2817#2818#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1050">
+          <caret line="80" column="25" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/guis/TransactionGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="49" column="75" selection-start-line="49" selection-start-column="75" selection-end-line="49" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1266">
+          <caret line="170" column="25" selection-start-line="170" selection-start-column="25" selection-end-line="170" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/Saphmerce.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="676">
+        <state relative-caret-position="918">
           <caret line="59" column="38" selection-start-line="59" selection-start-column="38" selection-end-line="59" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -746,41 +654,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/guis/ShopItemGUI.java">
+    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="34" column="69" selection-start-line="34" selection-start-column="69" selection-end-line="34" selection-end-column="69" />
+        <state relative-caret-position="288">
+          <caret line="23" column="71" selection-start-line="23" selection-start-column="71" selection-end-line="23" selection-end-column="71" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/guis/TransactionGUI.java">
+    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/commands/ShopAdminCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-587">
-          <caret line="49" column="75" selection-start-line="49" selection-start-column="75" selection-end-line="49" selection-end-column="75" />
+        <state relative-caret-position="252">
+          <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/Shop.java">
+    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/guis/CategoryGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="170" column="25" selection-start-line="170" selection-start-column="25" selection-end-line="170" selection-end-column="25" />
+        <state relative-caret-position="558">
+          <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
           <folding>
-            <element signature="e#5494#5495#0" expanded="true" />
-            <element signature="e#5535#5536#0" expanded="true" />
+            <element signature="e#2777#2778#0" expanded="true" />
+            <element signature="e#2817#2818#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/events/ShopTransactionEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="996">
+          <caret line="101" column="48" lean-forward="true" selection-start-line="101" selection-start-column="48" selection-end-line="101" selection-end-column="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/saphron/saphmerce/API.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1429">
-          <caret line="358" selection-start-line="358" selection-end-line="358" />
+        <state relative-caret-position="77">
+          <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1302#1303#0" expanded="true" />
-            <element signature="e#1368#1369#0" expanded="true" />
-            <element signature="e#15144#15145#0" expanded="true" />
-            <element signature="e#15206#15207#0" expanded="true" />
           </folding>
         </state>
       </provider>
