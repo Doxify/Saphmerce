@@ -48,44 +48,43 @@ public class API {
      * @param p - Bukkit Player Object
      * @param transactionShopItem - ShopItem
      * @param transactionItemAmount - integer, quantity of purchase
-     * @return Whether or not the function ran smoothly. If Saphmerce isn't loaded it returns false.
      */
-    public static boolean handleBuy(Player p, ShopItem transactionShopItem, int transactionItemAmount) {
-        if(plugin instanceof Saphmerce) {
-            EconomyResponse econres = plugin.getEcon().withdrawPlayer(p, (transactionItemAmount * transactionShopItem.getBuyPrice()));
-            if(econres.transactionSuccess()) {
-                if(transactionShopItem.isCommandItem()) {
-                    String command = transactionShopItem.getCommandString().replace("<p>", p.getDisplayName());
+    public static void handleBuy(Player p, ShopItem transactionShopItem, int transactionItemAmount) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                EconomyResponse econres = plugin.getEcon().withdrawPlayer(p, (transactionItemAmount * transactionShopItem.getBuyPrice()));
+                if(econres.transactionSuccess()) {
+                    if(transactionShopItem.isCommandItem()) {
+                        String command = transactionShopItem.getCommandString().replace("<p>", p.getDisplayName());
 
-                    for(int i = 0; i < transactionItemAmount; i++) {
-                        plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
-                    }
-
-                    p.sendMessage(ChatColor.GREEN + "Successful purchase: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
-                    p.updateInventory();
-
-                } else {
-                    ItemStack buyItem = new ItemStack(transactionShopItem.getDisplayItem());
-                    buyItem.setAmount(transactionItemAmount);
-                    HashMap<Integer, ItemStack> leftOverItems = p.getInventory().addItem(buyItem);
-
-                    p.sendMessage(ChatColor.GREEN + "Successful purchase: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
-                    p.updateInventory();
-
-                    if(leftOverItems.size() > 0) {
-                        for(ItemStack item : leftOverItems.values()) {
-                            p.getWorld().dropItem(p.getLocation(), item);
+                        for(int i = 0; i < transactionItemAmount; i++) {
+                            plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
                         }
-                        p.sendMessage(ChatColor.RED + "You did not have enough room in your inventory, check the ground for your item(s).");
+
+                        p.sendMessage(ChatColor.GREEN + "Successful purchase: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
+                        p.updateInventory();
+
+                    } else {
+                        ItemStack buyItem = new ItemStack(transactionShopItem.getDisplayItem());
+                        buyItem.setAmount(transactionItemAmount);
+                        HashMap<Integer, ItemStack> leftOverItems = p.getInventory().addItem(buyItem);
+
+                        p.sendMessage(ChatColor.GREEN + "Successful purchase: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));
+                        p.updateInventory();
+
+                        if(leftOverItems.size() > 0) {
+                            for(ItemStack item : leftOverItems.values()) {
+                                p.getWorld().dropItem(p.getLocation(), item);
+                            }
+                            p.sendMessage(ChatColor.RED + "You did not have enough room in your inventory, check the ground for your item(s).");
+                        }
                     }
+                } else {
+                    p.sendMessage(ChatColor.RED + "Insufficient funds! You need at least " + Utilities.moneyFormat.format(econres.amount));
                 }
-            } else {
-                p.sendMessage(ChatColor.RED + "Insufficient funds! You need at least " + Utilities.moneyFormat.format(econres.amount));
             }
-            return true;
-        } else {
-            return false;
-        }
+        });
     }
 
     /**
