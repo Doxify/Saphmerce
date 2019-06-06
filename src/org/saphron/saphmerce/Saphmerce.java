@@ -13,6 +13,7 @@ import org.saphron.saphmerce.events.*;
 
 public class Saphmerce extends JavaPlugin {
 
+    private static Saphmerce instance;
     private Shop shop = null;
     private FileManager fileManager = null;
     private ProfileManager profileManager = null;
@@ -24,10 +25,11 @@ public class Saphmerce extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         profileManager = new ProfileManager();
         fileManager = new FileManager(this);
         shop = fileManager.loadShopFromFile();
-        api = new API(this);
+        api = new API();
 
         // Commands
         getCommand("shop").setExecutor(new ShopCommand(this));
@@ -45,6 +47,7 @@ public class Saphmerce extends JavaPlugin {
         setupChat();
         setupPermissions();
         setupEcon();
+
     }
 
     @Override
@@ -97,5 +100,9 @@ public class Saphmerce extends JavaPlugin {
         }
         perms = rsp.getProvider();
         return perms != null;
+    }
+
+    public static Saphmerce getPlugin() {
+        return instance;
     }
 }

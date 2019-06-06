@@ -26,11 +26,8 @@ public class API {
     public static final String GENERATOR_PREFIX = ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "GENERATOR " + ChatColor.GOLD + ChatColor.BOLD.toString() + "◗ ";
 
 
-    /**
-     * @param plugin - Saphmerce instance
-     */
-    public API(Saphmerce plugin) {
-        this.plugin = plugin;
+    public API() {
+        plugin = Saphmerce.getPlugin();
     }
 
     /**
@@ -102,7 +99,12 @@ public class API {
         return sellAllStick;
     }
 
+    /**
+     *
+     * @return Temporary Sell All ItemStack
+     */
     public static ItemStack getTempSellAllStick() {
+        // DO NOT CHANGE NAME OR LORE, IT WILL BREAK ALL PREVIOUS SELL ALL STICKS SPAWNED.
         ItemStack tempSellAllStick = ItemStackCreator.createItemStack(
                 Material.STICK,
                 ChatColor.LIGHT_PURPLE + "Sell All Stick " + ChatColor.RED + ChatColor.BOLD.toString() + "LIMITED",
@@ -210,6 +212,7 @@ public class API {
                             soldItemsAmount += invItem.getAmount();
                             inventory.removeItem(invItem);
                             soldItems = true;
+
                         }
                     }
                 }

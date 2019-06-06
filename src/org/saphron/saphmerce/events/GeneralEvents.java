@@ -10,7 +10,7 @@ import org.saphron.saphmerce.Saphmerce;
 
 public class GeneralEvents implements Listener {
 
-    Saphmerce plugin;
+    private Saphmerce plugin;
 
     public GeneralEvents(Saphmerce p) { plugin = p; }
 

@@ -1,9 +1,9 @@
 package org.saphron.saphmerce.events;
 
+import de.Herbystar.TTA.TTA_Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,23 +11,22 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.saphron.saphmerce.API;
 import org.saphron.saphmerce.Profile;
 import org.saphron.saphmerce.Saphmerce;
-import org.saphron.saphmerce.Shop;
 
 import java.util.List;
 
 public class SellAllStickEvent implements Listener {
 
-    Saphmerce plugin;
-    Shop shop;
+    private Saphmerce plugin;
+    private API api;
 
     public SellAllStickEvent(Saphmerce p) {
-        plugin = p;
-        shop = plugin.getShop();
+        this.plugin = p;
+        this.api = p.getApi();
     }
 
 
@@ -43,15 +42,13 @@ public class SellAllStickEvent implements Listener {
                         if(validate(p.getItemInHand())) {
                             if(!profile.hasSellCooldown()) {
                                 handleSellAllStick(p, e);
-                                return;
                             } else {
-                                p.sendMessage(ChatColor.RED + "You can only use the /sell command once every " + plugin.getApi().COOLDOWN + " seconds.");
-                                return;
+                                p.sendMessage(ChatColor.RED + "You may only sell once every " + api.COOLDOWN + " seconds.");
                             }
                             // Then we check if its a temporary sell all stick
                         } else {
                             if(p.getItemInHand().hasItemMeta()) {
-                                ItemStack tempSellAllStick = plugin.getApi().getTempSellAllStick();
+                                ItemStack tempSellAllStick = api.getTempSellAllStick();
                                 if(p.getItemInHand().getItemMeta().hasDisplayName() && p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(tempSellAllStick.getItemMeta().getDisplayName())) {
                                     ItemStack itemInHand = p.getItemInHand();
                                     ItemMeta itemMeta = itemInHand.getItemMeta();
@@ -70,9 +67,9 @@ public class SellAllStickEvent implements Listener {
                                                     itemMeta.setLore(lore);
                                                     itemInHand.setItemMeta(itemMeta);
                                                     p.updateInventory();
+                                                    TTA_Methods.sendActionBar(p, ChatColor.YELLOW + "Remaining uses: " + ChatColor.GREEN + uses);
                                                 }  else {
-                                                    p.sendMessage(ChatColor.RED + "You can only use the /sell command once every " + plugin.getApi().COOLDOWN + " seconds.");
-                                                    return;
+                                                    p.sendMessage(ChatColor.RED + "You may only sell once every " + api.COOLDOWN + " seconds.");
                                                 }
                                             } else {
                                                 e.setCancelled(true);
@@ -80,7 +77,6 @@ public class SellAllStickEvent implements Listener {
                                             }
                                         } catch (NumberFormatException err) {
                                             err.printStackTrace();
-                                            return;
                                         }
                                     }
                                 }
@@ -92,12 +88,9 @@ public class SellAllStickEvent implements Listener {
         }
     }
 
-    public boolean validate(ItemStack sellAllStickItem) {
-        ItemStack sellAllStick = plugin.getApi().getSellAllStick();
-        if(sellAllStick.isSimilar(sellAllStickItem)) {
-            return true;
-        }
-        return false;
+    private boolean validate(ItemStack sellAllStickItem) {
+        ItemStack sellAllStick = api.getSellAllStick();
+        return sellAllStick.isSimilar(sellAllStickItem);
     }
 
     private void handleSellAllStick(Player p, PlayerInteractEvent e) {
@@ -106,10 +99,10 @@ public class SellAllStickEvent implements Listener {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
-                if(!plugin.getApi().handleSellAllInventory(p, clickedChest.getInventory())) {
+                if(!api.handleSellAllInventory(p, clickedChest.getInventory())) {
                     p.sendMessage(ChatColor.RED + "Couldn't find any items for sale in this chest.");
                 }
-                plugin.getApi().handleSellCooldown(profile);
+                api.handleSellCooldown(profile);
             }
         });
     }
