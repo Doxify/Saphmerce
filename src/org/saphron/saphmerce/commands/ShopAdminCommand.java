@@ -24,11 +24,11 @@ public class ShopAdminCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(sender.hasPermission("saphmerce.admin")) {
-
             // shopadmin createCategory "NAME"
             // shopAdmin deleteCategory "NAME"
+            // shopadmin giveSellAllStick permanent "player"
             // shopadmin giveSellAllStick "player"
-            if(args.length == 2) {
+            if(args.length >= 2) {
                 String categoryName = args[1];
 
                 switch (args[0].toUpperCase()) {
@@ -58,20 +58,41 @@ public class ShopAdminCommand implements CommandExecutor {
                         break;
                     }
                     case "GIVESELLALLSTICK": {
-                        Player target = Bukkit.getPlayer(args[1]);
+                        Player target;
+                        boolean permanent;
+                        if(args.length == 3) {
+                            target = Bukkit.getPlayer(args[2]);
+                            permanent = true;
+                        } else {
+                            target = Bukkit.getPlayer(args[1]);
+                            permanent = false;
+                        }
+
                         if(target != null) {
-                            if(target.getInventory().firstEmpty() != -1) {
-                                target.getInventory().addItem(plugin.getApi().getSellAllStick());
-                                target.sendMessage(ChatColor.GREEN + "You've been given a sell all stick, keep it safe!");
+                            if(permanent) {
+                                if(target.getInventory().firstEmpty() != -1) {
+                                    target.getInventory().addItem(plugin.getApi().getSellAllStick());
+                                    target.sendMessage(ChatColor.GREEN + "You've been given an unlimited sell all stick!");
+                                } else {
+                                    target.getWorld().dropItem(target.getLocation(), plugin.getApi().getSellAllStick());
+                                    target.sendMessage(ChatColor.GREEN + "You've been given an unlimited sell all stick!");
+                                    target.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "There was no room in your inventory so your sell all stick has been dropped on the ground!");
+                                }
+                                sender.sendMessage(ChatColor.GREEN + "Successfully gave " + target.getName() + " an unlimited sell all stick.");
                             } else {
-                                target.getWorld().dropItem(target.getLocation(), plugin.getApi().getSellAllStick());
-                                target.sendMessage(ChatColor.GREEN + "You've been given a sell all stick, keep it safe!");
-                                target.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "There was no room in your inventory so your sell all stick has been dropped on the ground!");
+                                if(target.getInventory().firstEmpty() != -1) {
+                                    target.getInventory().addItem(plugin.getApi().getTempSellAllStick());
+                                    target.sendMessage(ChatColor.GREEN + "You've been given a temporary sell all stick!");
+                                } else {
+                                    target.getWorld().dropItem(target.getLocation(), plugin.getApi().getSellAllStick());
+                                    target.sendMessage(ChatColor.GREEN + "You've been given a temporary sell all stick!");
+                                    target.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "There was no room in your inventory so your sell all stick has been dropped on the ground!");
+                                }
+                                sender.sendMessage(ChatColor.GREEN + "Successfully gave " + target.getName() + " a temp. sell all stick.");
                             }
-                            sender.sendMessage(ChatColor.GREEN + "Successfully gave " + target.getName() + " a sell all stick.");
                             break;
                         } else {
-                            sender.sendMessage(ChatColor.RED + args[1] + " is not online.");
+                            sender.sendMessage(ChatColor.RED + (args.length == 3 ? args[2] : args[1]) + " is not online.");
                             break;
                         }
                     }
@@ -80,7 +101,6 @@ public class ShopAdminCommand implements CommandExecutor {
                         break;
                     }
                 }
-
             // shopadmin addItem "CATEGORY" "BUY PRICE" "SELL PRICE" "ITEM NAME"
             } else if(args.length == 5 || args.length > 5) {
                 Player p = (Player) sender;
@@ -142,10 +162,11 @@ public class ShopAdminCommand implements CommandExecutor {
 
     public void displayShopAdminCommands(CommandSender p) {
         p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Usage:");
-        p.sendMessage(ChatColor.RED + "/shopAdmin createCategory 'categoryName'");
-        p.sendMessage(ChatColor.RED + "/shopAdmin deleteCategory 'categoryName'");
-        p.sendMessage(ChatColor.RED + "/shopAdmin addItem 'categoryName' 'buy price' 'sell price' 'item name'");
-        p.sendMessage(ChatColor.RED + "/shopAdmin giveSellAllStick 'player name'");
+        p.sendMessage(ChatColor.RED + "/shopAdmin createCategory <categoryName>");
+        p.sendMessage(ChatColor.RED + "/shopAdmin deleteCategory <categoryName>");
+        p.sendMessage(ChatColor.RED + "/shopAdmin addItem <categoryName> <buyPrice> <sellPrice> <itemName>");
+        p.sendMessage(ChatColor.RED + "/shopAdmin giveSellAllStick permanent <player> - unlimited uses");
+        p.sendMessage(ChatColor.RED + "/shopAdmin giveSellAllStick <player> - limited to 150 uses");
     }
 
 }

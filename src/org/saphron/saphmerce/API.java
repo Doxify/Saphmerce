@@ -95,11 +95,21 @@ public class API {
         // DO NOT CHANGE NAME OR LORE, IT WILL BREAK ALL PREVIOUS SELL ALL STICKS SPAWNED.
         ItemStack sellAllStick = ItemStackCreator.createItemStack(
                 Material.STICK,
-                ChatColor.LIGHT_PURPLE + "Sell All Stick",
+                ChatColor.LIGHT_PURPLE + "Sell All Stick " + ChatColor.GREEN + ChatColor.BOLD.toString() + "UNLIMITED",
                 Arrays.asList(ChatColor.YELLOW + "Right click a chest to use.")
         );
 
         return sellAllStick;
+    }
+
+    public static ItemStack getTempSellAllStick() {
+        ItemStack tempSellAllStick = ItemStackCreator.createItemStack(
+                Material.STICK,
+                ChatColor.LIGHT_PURPLE + "Sell All Stick " + ChatColor.RED + ChatColor.BOLD.toString() + "LIMITED",
+                Arrays.asList(ChatColor.GRAY + "Uses: " + ChatColor.GREEN + 150, "", ChatColor.YELLOW + "Right click a chest to use.")
+        );
+
+        return tempSellAllStick;
     }
 
     /**
