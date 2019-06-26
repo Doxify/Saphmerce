@@ -28,7 +28,7 @@ public class ShopAdminCommand implements CommandExecutor {
             // shopAdmin deleteCategory "NAME"
             // shopadmin giveSellAllStick permanent "player"
             // shopadmin giveSellAllStick "player"
-            if(args.length >= 2) {
+            if(args.length >= 2 && args.length <= 3) {
                 String categoryName = args[1];
 
                 switch (args[0].toUpperCase()) {

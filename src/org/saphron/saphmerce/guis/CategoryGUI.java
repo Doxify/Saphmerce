@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.saphron.saphmerce.Category;
 import org.saphron.saphmerce.Shop;
 import org.saphron.saphmerce.utilities.ItemStackCreator;
@@ -38,6 +39,28 @@ public class CategoryGUI {
                         ChatColor.LIGHT_PURPLE + category.getName(),
                         Arrays.asList(ChatColor.GRAY + "Items: " + ChatColor.YELLOW + category.getCategoryItems().size())
                 );
+                ItemMeta itemMeta = categoryItem.getItemMeta();
+                List<String> lore = itemMeta.getLore();
+
+                if(category.getAllowedClasses() == 0) {
+                    category.setEnabled(false);
+                    lore.add("");
+                    lore.add(ChatColor.RED + ChatColor.BOLD.toString() + "CATEGORY DISABLED!");
+                    lore.add(ChatColor.RED + "Please set allowed class in shop.json and restart");
+                    lore.add(ChatColor.RED + "0 = disabled, -1 = all classes, <int> = classes >= <int>");
+                } else if(category.getAllowedClasses() == -1) {
+                    lore.add(" ");
+                    lore.add(ChatColor.GOLD + "Class Requirement: ");
+                    lore.add(ChatColor.GREEN + "None");
+                } else {
+                    lore.add(" ");
+                    lore.add(ChatColor.GOLD + "Class Requirement: ");
+                    lore.add(ChatColor.YELLOW + "Class " + category.getAllowedClasses() + "+ to buy items");
+                }
+
+                itemMeta.setLore(lore);
+                categoryItem.setItemMeta(itemMeta);
+
                 categoryInventory.setItem(i, categoryItem);
                 categoryCounter++;
 

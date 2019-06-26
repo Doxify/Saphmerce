@@ -18,6 +18,7 @@ public class ShopSerializer {
         categoryObject.put("name", category.getName());
         categoryObject.put("displayItem", category.getDisplayItem().getType().name());
         categoryObject.put("displayItemDurability", String.valueOf(category.getDisplayItem().getDurability()));
+        categoryObject.put("allowedClasses", String.valueOf(category.getAllowedClasses()));
 
         for(int i = 0; i < category.getCategoryItems().size(); i++) {
             ShopItem item = category.getCategoryItems().get(i);
@@ -42,6 +43,7 @@ public class ShopSerializer {
             String name = (String) categoryObject.get("name");
             ItemStack displayItem = new ItemStack(Material.getMaterial((String) categoryObject.get("displayItem")));
             displayItem.setDurability(Short.parseShort((String) categoryObject.get("displayItemDurability")));
+            int allowedClasses = Integer.valueOf((String) categoryObject.get("allowedClasses"));
             JSONArray shopItemsJson = (JSONArray) categoryObject.get("shopItems");
             List<ShopItem> shopItemsList = new ArrayList<>();
 
@@ -63,7 +65,7 @@ public class ShopSerializer {
 
             }
 
-            return new Category(name, displayItem, shopItemsList);
+            return new Category(name, displayItem, shopItemsList, allowedClasses);
         } catch (NullPointerException e) {
             e.printStackTrace();
             return null;

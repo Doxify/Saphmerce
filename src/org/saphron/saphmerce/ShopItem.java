@@ -1,8 +1,10 @@
 package org.saphron.saphmerce;
 
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class ShopItem {
+public class ShopItem implements RewardItem {
 
     private String name;
     private ItemStack displayItem;
@@ -63,7 +65,14 @@ public class ShopItem {
     public void setItemCommand(String c) { commandString = c; }
 
 
+    @Override
     public String getName() { return name; }
+
+    @Override
+    public Material getMaterial() { return displayItem.getType(); }
+
+    @Override
+    public int getMaterialDurability() { return 0; }
 
     public ItemStack getDisplayItem() { return displayItem; }
 
@@ -79,4 +88,10 @@ public class ShopItem {
 
     public String getCommandString() { return commandString; }
 
+    @Override
+    public String getCommand(Player p) {
+        String command = commandString;
+        command.replace("<p>", p.getName());
+        return command;
+    }
 }

@@ -10,12 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.saphron.saphmerce.utilities.ItemStackCreator;
+import org.saphron.saphmerce.utilities.TaskChain;
 
 import java.util.*;
 
 /**
  * @author Andrei Georgescu
- * @version 0.0.1
+ * @version 0.1.0
  */
 public class API {
 
@@ -39,6 +40,10 @@ public class API {
         return plugin.getProfileManager().getProfile(uuid);
     }
 
+    public static Category getCategory(String categoryName) {
+        return plugin.getShop().getShopCategoryByName(categoryName);
+    }
+
     /**
      * Handles the purchase of a ShopItem
      *
@@ -56,7 +61,14 @@ public class API {
                         String command = transactionShopItem.getCommandString().replace("<p>", p.getDisplayName());
 
                         for(int i = 0; i < transactionItemAmount; i++) {
-                            plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+                            // Using TaskChain to dispatch commands SYNC
+                            TaskChain.newChain().add(new TaskChain.GenericTask() {
+                                public void run() {
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                                }
+                            }).execute();
+
+
                         }
 
                         p.sendMessage(ChatColor.GREEN + "Successful purchase: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount));

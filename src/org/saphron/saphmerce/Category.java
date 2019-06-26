@@ -4,7 +4,9 @@ import org.bukkit.inventory.ItemStack;
 import org.saphron.saphmerce.guis.ShopItemGUI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Category {
 
@@ -13,20 +15,25 @@ public class Category {
     private boolean enabled;
     private List<ShopItem> categoryItems;
     private ShopItemGUI shopItemGUI;
+    private int allowedClasses;
 
 
-    public Category(String name, ItemStack displayItem, List<ShopItem> categoryItems) {
+    // Constructor when loading from file
+    public Category(String name, ItemStack displayItem, List<ShopItem> categoryItems, int allowedClasses) {
         setName(name);
         setDisplayItem(displayItem);
         setCategoryItems(categoryItems);
         setEnabled(true);
+        setAllowedClasses(allowedClasses);
         shopItemGUI = new ShopItemGUI(this);
     }
 
+    // Default constructor
     public Category(String name, ItemStack displayItem) {
         setName(name);
         setDisplayItem(displayItem);
         setEnabled(false);
+        setAllowedClasses(0);
         categoryItems = new ArrayList<>();
         shopItemGUI = new ShopItemGUI(this);
     }
@@ -87,6 +94,31 @@ public class Category {
 
     public ShopItemGUI getShopItemGUI() {
         return shopItemGUI;
+    }
+
+    public void setAllowedClasses(int allowedClasses) { this.allowedClasses = allowedClasses; }
+
+    public int getAllowedClasses() { return allowedClasses; }
+
+    public List<RewardItem> getScratcherRewards() {
+        List<ShopItem> keys = new ArrayList<>(categoryItems);
+        List<RewardItem> rewardList = new ArrayList<>();
+        Random r = new Random();
+        int itemsToAdd = 9;
+
+        for(int i = 0; i < 9; i++) {
+            if(itemsToAdd != 0) {
+                ShopItem item = categoryItems.get(r.nextInt(keys.size()));
+                rewardList.add(item);
+                itemsToAdd--;
+            } else {
+                rewardList.add(null);
+            }
+        }
+
+        Collections.shuffle(rewardList);
+
+        return rewardList;
     }
 
 }

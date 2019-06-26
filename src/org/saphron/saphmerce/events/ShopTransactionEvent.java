@@ -1,5 +1,6 @@
 package org.saphron.saphmerce.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -7,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.saphron.saphmerce.*;
+import org.saphron.saphmerce.sevents.ShopItemPrePurchaseEvent;
 import org.saphron.saphmerce.utilities.InventoryGuard;
 
 public class ShopTransactionEvent implements Listener {
@@ -104,8 +106,13 @@ public class ShopTransactionEvent implements Listener {
                         break;
                     }
                     case "BUY": {
-                        plugin.getApi().handleBuy(p, transactionShopItem, transactionItemAmount);
-                        p.openInventory(shop.transactionGUI.getTransactionGUI(transactionShopItem, p, transactionItemAmount));
+                        ShopItemPrePurchaseEvent shopItemPrePurchaseEvent = new ShopItemPrePurchaseEvent(p, profile.getClickedCategory(), transactionShopItem);
+                        Bukkit.getPluginManager().callEvent(shopItemPrePurchaseEvent);
+
+                        if(!shopItemPrePurchaseEvent.isCancelled()) {
+                            plugin.getApi().handleBuy(p, transactionShopItem, transactionItemAmount);
+                            p.openInventory(shop.transactionGUI.getTransactionGUI(transactionShopItem, p, transactionItemAmount));
+                        }
                         break;
                     }
                     case "RETURN": {
