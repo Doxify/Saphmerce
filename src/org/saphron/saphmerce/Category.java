@@ -83,8 +83,8 @@ public class Category {
 
     public ShopItem getShopItemByItemStack(ItemStack itemStack) {
         for(ShopItem item : categoryItems) {
-            if(item.getDisplayItem().getType() == itemStack.getType()) {
-                if(item.getDisplayItem().getDurability() == itemStack.getDurability()) {
+            if(item.getMaterial() == itemStack.getType()) {
+                if(item.getMaterialDurability() == itemStack.getDurability()) {
                     return item;
                 }
             }

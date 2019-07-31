@@ -9,6 +9,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.saphron.saphmerce.sevents.ShopSaleEvent;
 import org.saphron.saphmerce.utilities.ItemStackCreator;
 import org.saphron.saphmerce.utilities.TaskChain;
 
@@ -150,6 +151,9 @@ public class API {
 
                     if(econres.transactionSuccess()) {
                         p.sendMessage(ChatColor.GREEN + "Successful sale: " + transactionItemAmount + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount) + (hasMultiplier ? ChatColor.AQUA + " [Multiplier]" : ""));
+
+                        ShopSaleEvent shopSaleEvent = new ShopSaleEvent(p, econres.amount);
+                        Bukkit.getPluginManager().callEvent(shopSaleEvent);
                     } else {
                         p.sendMessage(ChatColor.GREEN + "Transaction failed, contact an administrator.");
                     }
@@ -188,6 +192,9 @@ public class API {
 
                     if(econres.transactionSuccess()) {
                         p.sendMessage(ChatColor.GREEN + "Successful sale: " + itemsInInventory + " x " + transactionShopItem.getName() + " for " + Utilities.moneyFormat.format(econres.amount) + (hasMultiplier ? ChatColor.AQUA + " [Multiplier]" : ""));
+
+                        ShopSaleEvent shopSaleEvent = new ShopSaleEvent(p, econres.amount);
+                        Bukkit.getPluginManager().callEvent(shopSaleEvent);
                     } else {
                         p.sendMessage(ChatColor.GREEN + "Transaction failed, contact an administrator.");
                     }
@@ -196,51 +203,6 @@ public class API {
                 }
             }
         });
-    }
-
-    /**
-     *
-     * @param p player object
-     * @param inventory player's inventory
-     * @return the amount sold as a double
-     */
-    public static double handleSellAllInventoryMineMode(Player p, Inventory inventory) {
-        boolean soldItems = false;
-        int soldItemsAmount = 0;
-        double soldItemsPrice = 0;
-
-        for (ItemStack invItem : inventory.getContents()) {
-            if (invItem != null) {
-                // Making sure that the item being sold is in fact a mine drop
-                if (!plugin.getShop().isMineDrop(invItem)) {
-                    continue;
-                }
-
-                for (Category category : plugin.getShop().getShopCategories()) {
-                    ShopItem shopItem = category.getShopItemByItemStack(invItem);
-                    if (shopItem != null) {
-                        if (shopItem.isSellable()) {
-                            soldItemsPrice += (shopItem.getSellPrice() * invItem.getAmount());
-                            soldItemsAmount += invItem.getAmount();
-                            inventory.removeItem(invItem);
-                            soldItems = true;
-
-                        }
-                    }
-                }
-            }
-        }
-
-        if (soldItems) {
-            EconomyResponse econres;
-            if (plugin.getShop().getMultiplier() > 0) {
-                econres = plugin.getEcon().depositPlayer(p, soldItemsPrice * plugin.getShop().getMultiplier());
-                p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount) + ChatColor.AQUA + " [Multiplier]");
-            }
-            return soldItemsPrice * plugin.getShop().getMultiplier();
-        } else {
-            return 0;
-        }
     }
 
     /**
@@ -268,6 +230,7 @@ public class API {
                     }
                 }
             }
+
         }
 
         if(soldItems) {
@@ -276,11 +239,13 @@ public class API {
             if(p.hasPermission("saphmerce.multiplier")) {
                 econres = plugin.getEcon().depositPlayer(p, soldItemsPrice * plugin.getShop().getMultiplier());
                 p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount) + ChatColor.AQUA + " [Multiplier]");
-                return soldItems;
+            } else {
+                econres = plugin.getEcon().depositPlayer(p, soldItemsPrice);
+                p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount));
             }
 
-            econres = plugin.getEcon().depositPlayer(p, soldItemsPrice);
-            p.sendMessage(ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount));
+            ShopSaleEvent shopSaleEvent = new ShopSaleEvent(p, econres.amount);
+            Bukkit.getPluginManager().callEvent(shopSaleEvent);
         }
 
         return soldItems;
@@ -312,13 +277,19 @@ public class API {
         }
 
         if(soldItems) {
+            double price = soldItemsPrice;
             // Handling multiplier permission
             if(plugin.getPerms().playerHas(null, p, "saphmerce.multiplier")) {
-                plugin.getEcon().depositPlayer(p, soldItemsPrice * plugin.getShop().getMultiplier());
-                return soldItemsPrice;
+                price = soldItemsPrice * plugin.getShop().getMultiplier();
             }
 
-            plugin.getEcon().depositPlayer(p, soldItemsPrice);
+            EconomyResponse econres = plugin.getEcon().depositPlayer(p, price);
+
+            if(p.isOnline()) {
+                ShopSaleEvent shopSaleEvent = new ShopSaleEvent(p.getPlayer(), econres.amount);
+                Bukkit.getPluginManager().callEvent(shopSaleEvent);
+            }
+
         }
 
         return soldItemsPrice;
@@ -367,6 +338,9 @@ public class API {
                     if(p.isOnline()) {
                         Player player = p.getPlayer();
                         player.sendMessage(GENERATOR_PREFIX + ChatColor.GREEN + "Successfully sold " + soldItemsAmount  + (soldItemsAmount > 1 ? " items " : " item ") + "for " + Utilities.moneyFormat.format(econres.amount) + (hasMultiplier ? ChatColor.AQUA + " [Multiplier]" : ""));
+
+                        ShopSaleEvent shopSaleEvent = new ShopSaleEvent(player, econres.amount);
+                        Bukkit.getPluginManager().callEvent(shopSaleEvent);
                     }
                 }
             }

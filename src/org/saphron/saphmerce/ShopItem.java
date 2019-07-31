@@ -90,8 +90,7 @@ public class ShopItem implements RewardItem {
 
     @Override
     public String getCommand(Player p) {
-        String command = commandString;
-        command.replace("<p>", p.getName());
+        String command = commandString.replace("<p>", p.getName());
         return command;
     }
 }
