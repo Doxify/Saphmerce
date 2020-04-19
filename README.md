@@ -1,7 +1,7 @@
 ![alt text](https://i.imgur.com/qpFv2Ab.jpg "Saphron Logo")
 
 # Saphmerce
-Saphron's virtual shop plugin
+Saphmerce is a Minecraft shop plugin
 
 ## Tutorial
 
